@@ -8,7 +8,7 @@ var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, '
 function preload() {
 
     game.load.image('tree', 'assets/tree.png');
-    game.load.image('grass', 'assets/grass.png');
+    game.load.image('grass', 'assets/grass.png'); 
 
 }
 
