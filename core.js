@@ -21,7 +21,7 @@ function create() {
 
     
 
-    
+    game.add.sprite(-200, -200, 'grass');
 
     for(i = 0; i < 100000; i += 960) {
          for(j = 0; j < 100000; j += 960) {
