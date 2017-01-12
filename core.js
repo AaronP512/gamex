@@ -1,6 +1,8 @@
 
 
-var cursors;
+
+var perf;
+var cursors, movementKeys;
 
 
 var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, '', { preload: preload, create: create, update: update });
@@ -9,8 +11,10 @@ function preload() {
 
     game.load.image('tree', 'assets/tree.png');
     game.load.image('grass', 'assets/grass.png'); 
-
+    game.time.advancedTiming = true;
 }
+
+
 
 function create() {
     
@@ -20,11 +24,17 @@ function create() {
     abox();
 
     
+    movementKeys = {
+        up: game.input.keyboard.addKey(Phaser.Keyboard.W),
+        down: game.input.keyboard.addKey(Phaser.Keyboard.S),
+        left: game.input.keyboard.addKey(Phaser.Keyboard.A),
+        right: game.input.keyboard.addKey(Phaser.Keyboard.D),
+    };
 
-    game.add.sprite(-200, -200, 'grass');
+    
 
-    for(i = 0; i < 100000; i += 960) {
-         for(j = 0; j < 100000; j += 960) {
+    for(i = -50000; i < 50000; i += 960) {
+         for(j = -50000; j < 50000; j += 960) {
             game.add.sprite(i, j, 'grass');
         }
     }
@@ -36,14 +46,19 @@ function create() {
     game.camera.x = game.camera.y = 100;
 
     
+
 }
 
 function update() {
     
     movementHandler();
-    game.debug.cameraInfo(game.camera, 32, 32);
+    //game.debug.cameraInfo(game.camera, 32, 32);
 
     //game.camera.x++;
+
+    game.debug.text(game.time.fps + "fps, "+ game.time.elapsed + " ms. Min: " + game.time.fpsMin + " Max:" + game.time.fpsMax , 2, 14, "#00ff00");
+
+    
 }
 
 
@@ -65,9 +80,9 @@ function abox() {
 
 function movementHandler() {
 
-    game.camera.y -= cursors.up.isDown ? 4 : 0;
-    game.camera.y += cursors.down.isDown ? 4 : 0;
-    game.camera.x -= cursors.left.isDown ? 4 : 0;
-    game.camera.x += cursors.right.isDown ? 4 : 0;
+    game.camera.y -= cursors.up.isDown || movementKeys.up.isDown ? 4 : 0;
+    game.camera.y += cursors.down.isDown || movementKeys.down.isDown ? 4 : 0;
+    game.camera.x -= cursors.left.isDown || movementKeys.left.isDown ? 4 : 0;
+    game.camera.x += cursors.right.isDown || movementKeys.right.isDown ? 4 : 0;
 
 }
