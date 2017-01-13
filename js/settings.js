@@ -1,4 +1,4 @@
 GameSettings = {
-    bounds: 100000,
+    bounds: 50000,
     backgroundColor: '#00ff60'
 }

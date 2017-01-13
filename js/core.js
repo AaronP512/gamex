@@ -28,6 +28,9 @@ let playState = {
         feet = game.add.group();
         feet.enableBody = true;
 
+        tomatoes = game.add.group();
+        tomatoes.enableBody = true;
+
          sam = game.add.sprite(800, 400, 'sams');
                 sam.enableBody = true;
                 sam.scale.setTo(1.5,1.5);
@@ -53,6 +56,16 @@ let playState = {
             belly.create(x - 60, y - 170, 'tree_belly');
             
         }
+
+        for(y = -GameSettings.bounds; y < GameSettings.bounds; y += 250 ) {
+            var x = Math.random() * 2e3;
+            //let y = Math.random() * 2e3;
+            var plant = tomatoes.create(x , y, 'tomato');
+            plant.scale.setTo(0.16,0.16);
+            //plant.body.setSize(30, 2, 21, 0); //check
+            plant.body.immovable = true;
+                                  
+        }
         
         game.camera.x = game.camera.y = 100;
        
@@ -67,6 +80,9 @@ let playState = {
         
         game.physics.arcade.collide(sam, feet);
         game.physics.arcade.overlap(sam, feet, function() { alert("boom"); }, null, this);
+
+        game.physics.arcade.collide(sam, tomatoes);
+        game.physics.arcade.overlap(sam, tomatoes, function() { alert("spooch"); }, null, this);
         //game.debug.cameraInfo(game.camera, 32, 32);
         //game.camera.x++;
         game.debug.text(game.time.fps + "fps, "+ game.time.elapsed + " ms. Min: " + game.time.fpsMin + " Max:" + game.time.fpsMax , 2, 14, "#00ff00");
