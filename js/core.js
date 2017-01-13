@@ -3,6 +3,7 @@ var perf;
 var cursors, movementKeys;
 var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO);//, '', { /*preload: preload, create: create, update: update*/ });
 var sam; var cursors;
+var belly;
 var feet;
 let playState = {
     create: function create() {
@@ -21,13 +22,20 @@ let playState = {
         };
  
         game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'grass');
+         
+        
+
+        feet = game.add.group();
+        feet.enableBody = true;
+
          sam = game.add.sprite(800, 400, 'sams');
                 sam.enableBody = true;
                 sam.scale.setTo(1.5,1.5);
                 game.physics.arcade.enable(sam);
                 sam.body.setSize(50, 42, 7, 15); //check
-        feet = game.add.group();
-        feet.enableBody = true;
+
+        belly = game.add.group();
+
         for(y = -GameSettings.bounds; y < GameSettings.bounds; y += 250 ) {
             var x = Math.random() * 2e3;
             //let y = Math.random() * 2e3;
@@ -35,7 +43,17 @@ let playState = {
             bark.body.setSize(30, 2, 21, 0); //check
             bark.body.immovable = true;
             //foot.body.immovable = false;
-            game.add.sprite(x - 60, y - 170, 'tree_belly');
+            //game.add.sprite(x - 60, y - 170, 'tree_belly');
+            belly.create(x - 60, y - 170, 'tree_belly');
+
+            var x = Math.random() * 2e3 *-1;
+            //let y = Math.random() * 2e3;
+            var bark = feet.create(x , y, 'tree_foot');
+            bark.body.setSize(30, 2, 21, 0); //check
+            bark.body.immovable = true;
+            //foot.body.immovable = false;
+            //game.add.sprite(x - 60, y - 170, 'tree_belly');
+            belly.create(x - 60, y - 170, 'tree_belly');
             
         }
         
