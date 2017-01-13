@@ -31,12 +31,21 @@ let playState = {
             right: game.input.keyboard.addKey(Phaser.Keyboard.D),
         };
 
- 
+        
 
         game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'grass');
 
+
+
+        
+        
         feet = game.add.group();
         feet.enableBody = true;
+
+        sam = game.add.sprite(800, 400, 'sams');
+
+        belly = game.add.group();
+
 
         for(y = -GameSettings.bounds; y < GameSettings.bounds; y += 250 ) {
             var x = Math.random() * 2e3;
@@ -46,15 +55,15 @@ let playState = {
             bark.body.setSize(30, 5, 21, 0);
             bark.body.immovable = true;
             //foot.body.immovable = false;
-            game.add.sprite(x - 60, y - 170, 'tree_belly');
-            
+            belly.create(x - 60, y - 170, 'tree_belly');
+         
         }
 
         
 
         game.camera.x = game.camera.y = 100;
 
-        sam = game.add.sprite(800, 400, 'sams');
+        
                 sam.enableBody = true;
 
                 sam.scale.setTo(1.5,1.5);
@@ -78,7 +87,7 @@ let playState = {
         
 
         game.physics.arcade.collide(sam, feet);
-        game.physics.arcade.overlap(sam, feet, function() { alert("boom"); }, null, this);
+       //game.physics.arcade.overlap(sam, feet, function() { alert("boom"); }, null, this);
         //game.debug.cameraInfo(game.camera, 32, 32);
 
         //game.camera.x++;
