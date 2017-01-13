@@ -10,19 +10,18 @@ var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO);/
 
 
 var sam; var cursors;
-let feet;
+var feet;
 
 let playState = {
     create: function create() {
 
+        game.physics.startSystem(Phaser.Physics.ARCADE);
         
         game.stage.backgroundColor = GameSettings.backgroundColor;
         game.world.setBounds(-GameSettings.bounds/2, -GameSettings.bounds/2, GameSettings.bounds, GameSettings.bounds);
 
         cursors = game.input.keyboard.createCursorKeys();
    
-
-
 
         
         movementKeys = {
@@ -37,18 +36,20 @@ let playState = {
         game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'grass');
 
         feet = game.add.group();
+        feet.enableBody = true;
 
         for(y = -GameSettings.bounds; y < GameSettings.bounds; y += 250 ) {
-            let x = Math.random() * 2e3;
+            var x = Math.random() * 2e3;
             //let y = Math.random() * 2e3;
 
-            feet.create(x , y, 'tree_foot');
+            var bark = feet.create(x , y, 'tree_foot');
+            bark.body.immovable = true;
             //foot.body.immovable = false;
             game.add.sprite(x - 60, y - 170, 'tree_belly');
             
         }
 
-        feet.enableBody = true;
+        
 
         game.camera.x = game.camera.y = 100;
 
