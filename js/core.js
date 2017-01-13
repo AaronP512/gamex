@@ -36,9 +36,15 @@ let playState = {
         game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'grass');
 
 
+         sam = game.add.sprite(800, 400, 'sams');
+                sam.enableBody = true;
 
-        
-        
+                sam.scale.setTo(1.5,1.5);
+
+                game.physics.arcade.enable(sam);
+
+                sam.body.setSize(50, 42, 7, 15); //check
+
         feet = game.add.group();
         feet.enableBody = true;
 
@@ -52,7 +58,7 @@ let playState = {
             //let y = Math.random() * 2e3;
 
             var bark = feet.create(x , y, 'tree_foot');
-            bark.body.setSize(30, 5, 21, 0);
+            bark.body.setSize(30, 2, 21, 0); //check
             bark.body.immovable = true;
             //foot.body.immovable = false;
             belly.create(x - 60, y - 170, 'tree_belly');
@@ -62,16 +68,6 @@ let playState = {
         
 
         game.camera.x = game.camera.y = 100;
-
-        
-                sam.enableBody = true;
-
-                sam.scale.setTo(1.5,1.5);
-
-                game.physics.arcade.enable(sam);
-
-                sam.body.setSize(50, 34, 7, 15);
-
                 sam.animations.add('up',[0,1,2,3,4,5,6,7,8],8,true);
                 sam.animations.add('left',[9,10,11,12,13,14,15,16,17],8,true);
                 sam.animations.add('down',[18,19,20,21,22,23,24,25,26],8,true);
