@@ -54,7 +54,7 @@ let playState = {
 
 
         for(y = -GameSettings.bounds; y < GameSettings.bounds; y += 250 ) {
-            var x = Math.random() * 2e3;
+            var x = Math.random() * 2e3 * (Math.random() < 0.5 ? -1 : 1);
             //let y = Math.random() * 2e3;
 
             var bark = feet.create(x , y, 'tree_foot');
