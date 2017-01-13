@@ -47,12 +47,9 @@ let playState = {
             belly.create(x - 60, y - 170, 'tree_belly');
 
             var x = Math.random() * 2e3 *-1;
-            //let y = Math.random() * 2e3;
             var bark = feet.create(x , y, 'tree_foot');
             bark.body.setSize(30, 2, 21, 0); //check
             bark.body.immovable = true;
-            //foot.body.immovable = false;
-            //game.add.sprite(x - 60, y - 170, 'tree_belly');
             belly.create(x - 60, y - 170, 'tree_belly');
             
         }
