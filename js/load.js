@@ -13,7 +13,7 @@ let loadState = {
 
 
         game.load.audio('chop', ['assets/sfx/chop.mp3', '']);
-
+        game.load.audio('chopdone', ['assets/sfx/chopdone.mp3', '']);
 
 
 

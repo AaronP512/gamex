@@ -59,7 +59,7 @@ let playState = {
                     */
                     game.add.tween(sprite.scale).to({x: 0.5, y: 0.5}, 2000, Phaser.Easing.Linear.Out, true, 0000, 1, false);
                     game.add.tween(sprite).to({alpha: 0}, 1000, Phaser.Easing.Linear.Out, true, 0000, 1, false); //to(properties, duration, ease, autoStart, delay, repeat, yoyo);
-
+                    game.add.audio('chopdone').play();
                     setTimeout(function() { sprite.visible = false; }, 1000);
                 }
                 
