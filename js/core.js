@@ -13,7 +13,7 @@ var cursorSprite;
 
 let playState = {
     create: function create() {
-
+        game.add.plugin(Phaser.Plugin.Debug);
         this.game.canvas.style.cursor = "none";
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -158,7 +158,6 @@ let playState = {
         
         cursorSprite.x = game.input.activePointer.x + game.camera.x;
         cursorSprite.y = game.input.mousePointer.y + game.camera.y;
-        console.log(game.input.mousePointer.y);
 
         Movement.movementHandler(cursors, movementKeys, sam);
         game.debug.text(game.time.fps + "fps, "+ game.time.elapsed + " ms. Min: " + game.time.fpsMin + " Max:" + game.time.fpsMax , 2, 14, "#00ff00");
