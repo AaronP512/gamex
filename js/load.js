@@ -16,9 +16,13 @@ let loadState = {
         game.load.audio('chopdone', ['assets/sfx/chopdone.mp3', '']);
 
         /* HUD */
-        game.load.image('health', 'assets/hud/health.png', 32, 32);
-        game.load.image('hunger', 'assets/hud/hunger.png', 32, 32);
-        game.load.image('mental', 'assets/hud/mental.png', 32, 32);
+        game.load.image('health', 'assets/hud/health.png');
+        game.load.image('hunger', 'assets/hud/hunger.png');
+        game.load.image('mental', 'assets/hud/mental.png');
+
+        /* Pointers */
+        game.load.image('pointer_axe', 'assets/pointers/axe.png');
+        game.load.spritesheet('pointers', 'assets/pointers/pointersprite.png', 64, 64, 4);
 
 
     },

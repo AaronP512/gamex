@@ -8,9 +8,14 @@ var feet;
 
 let treeClickCounter = 1;
 
+var cursorSprite;
+var cursorSprite;
 
 let playState = {
     create: function create() {
+
+        this.game.canvas.style.cursor = "none";
+
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
 
@@ -24,6 +29,7 @@ let playState = {
         game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'grass');
          
         
+
 
         feet = game.add.group();
         feet.enableBody = true;
@@ -39,7 +45,16 @@ let playState = {
 
         belly = game.add.group();
         belly.inputEnableChildren = true;
-        
+        belly.onChildInputOver.add(function() {
+            //this.game.canvas.style.cursor = "move";
+            cursorSprite.frame = 1;
+        }, this);
+
+        belly.onChildInputOut.add(function(){
+            this.game.canvas.style.cursor = "none";
+            cursorSprite.frame = 0;
+            }, this);
+
         
         belly.onChildInputDown.add(function (sprite) {
             if(!treeCutTween || !treeCutTween.isRunning) {
@@ -112,8 +127,8 @@ let playState = {
 
 
 
-
-
+        cursorSprite = game.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'pointers');
+        //cursorSprite.visible = false;
         new HUD(game);
 
 
@@ -131,7 +146,10 @@ let playState = {
         //game.debug.cameraInfo(game.camera, 32, 32);
 
         
-        
+        cursorSprite.x = game.input.activePointer.x + game.camera.x;
+        cursorSprite.y = game.input.mousePointer.y + game.camera.y;
+        console.log(game.input.mousePointer.y);
+
         Movement.movementHandler(cursors, movementKeys, sam);
         game.debug.text(game.time.fps + "fps, "+ game.time.elapsed + " ms. Min: " + game.time.fpsMin + " Max:" + game.time.fpsMax , 2, 14, "#00ff00");
         
