@@ -103,12 +103,22 @@ let playState = {
         
         game.camera.x = game.camera.y = 100;
        
-                sam.animations.add('up',[0,1,2,3,4,5,6,7,8],8,true);
-                sam.animations.add('left',[9,10,11,12,13,14,15,16,17],8,true);
-                sam.animations.add('down',[18,19,20,21,22,23,24,25,26],8,true);
-                sam.animations.add('right',[27,28,29,30,31,32,33,34,35],8,true);
-                cursors = game.input.keyboard.createCursorKeys();
-                game.camera.follow(sam);
+        sam.animations.add('up',[0,1,2,3,4,5,6,7,8],8,true);
+        sam.animations.add('left',[9,10,11,12,13,14,15,16,17],8,true);
+        sam.animations.add('down',[18,19,20,21,22,23,24,25,26],8,true);
+        sam.animations.add('right',[27,28,29,30,31,32,33,34,35],8,true);
+        cursors = game.input.keyboard.createCursorKeys();
+        game.camera.follow(sam);
+
+
+
+
+
+        new HUD(game);
+
+
+
+
     },
 
     update:function update() {

@@ -15,6 +15,10 @@ let loadState = {
         game.load.audio('chop', ['assets/sfx/chop.mp3', '']);
         game.load.audio('chopdone', ['assets/sfx/chopdone.mp3', '']);
 
+        /* HUD */
+        game.load.image('health', 'assets/hud/health.png', 32, 32);
+        game.load.image('hunger', 'assets/hud/hunger.png', 32, 32);
+        game.load.image('mental', 'assets/hud/mental.png', 32, 32);
 
 
     },
