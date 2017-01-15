@@ -5,6 +5,10 @@ var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO);/
 var sam; var cursors;
 var belly;
 var feet;
+
+let treeClickCounter = 1;
+
+
 let playState = {
     create: function create() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -34,6 +38,35 @@ let playState = {
         sam.body.setSize(50, 42, 7, 15); //check
 
         belly = game.add.group();
+        belly.inputEnableChildren = true;
+        
+        
+        belly.onChildInputDown.add(function (sprite) {
+            if(!treeCutTween || !treeCutTween.isRunning) {
+                treeCutTween = game.add.tween(sprite).from({angle: -3}, 55, Phaser.Easing.Bounce.InOut, true, 0000, 1, true); //to(properties, duration, ease, autoStart, delay, repeat, yoyo);
+                game.add.audio('chop').play();
+
+
+                if(treeClickCounter++ % 5 == 0) {
+                    /* LOL
+                    emitter = game.add.emitter(0, 0, 0);
+                    emitter.makeParticles('smoke');
+                    emitter.setScale(0.4, 2, 0.4, 2, 6000, Phaser.Easing.Quintic.Out);
+                    emitter.gravity = -100;
+                    emitter.emitX = sprite.position.x;
+                    emitter.emitY = sprite.position.y - 50;
+                    emitter.start(true, 2000, null, 10);
+                    */
+                    game.add.tween(sprite.scale).to({x: 0.5, y: 0.5}, 2000, Phaser.Easing.Linear.Out, true, 0000, 1, false);
+                    game.add.tween(sprite).to({alpha: 0}, 1000, Phaser.Easing.Linear.Out, true, 0000, 1, false); //to(properties, duration, ease, autoStart, delay, repeat, yoyo);
+
+                    setTimeout(function() { sprite.visible = false; }, 1000);
+                }
+                
+            }
+            
+        }, this);
+
 
         for(y = -GameSettings.bounds; y < GameSettings.bounds; y += 250 ) {
             var x = Math.random() * 2e3;
@@ -43,14 +76,19 @@ let playState = {
             bark.body.immovable = true;
             //foot.body.immovable = false;
             //game.add.sprite(x - 60, y - 170, 'tree_belly');
-            belly.create(x - 60, y - 170, 'tree_belly');
+            var abelly = belly.create(x + 30 , y + 30, 'tree_belly');
+            abelly.anchor.setTo(0.5, 0.8);
 
             var x = Math.random() * 2e3 *-1;
             var bark = feet.create(x , y, 'tree_foot');
             bark.body.setSize(30, 2, 21, 0); //check
             bark.body.immovable = true;
-            belly.create(x - 60, y - 170, 'tree_belly');
+            var abelly = belly.create(x + 30, y + 30, 'tree_belly');
+            abelly.anchor.setTo(0.5, 0.8);
             
+
+
+
         }
 
         for(y = -GameSettings.bounds; y < GameSettings.bounds; y += 250 ) {
