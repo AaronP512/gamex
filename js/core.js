@@ -84,6 +84,17 @@ let playState = {
 
 
         for(y = -GameSettings.bounds; y < GameSettings.bounds; y += 250 ) {
+            for(x2 = 0; x2 < 3; x2++) {
+
+                var x = Math.random() * 2e3;
+                var bark = feet.create(x , y, 'tree_foot');
+                bark.body.setSize(30, 2, 21, 0); //check
+                bark.body.immovable = true;
+
+                var abelly = belly.create(x + 30, y + 30, 'tree_belly');
+                abelly.anchor.setTo(0.5, 0.8);
+
+            /*
             var x = Math.random() * 2e3;
             //let y = Math.random() * 2e3;
             var bark = feet.create(x , y, 'tree_foot');
@@ -100,10 +111,9 @@ let playState = {
             bark.body.immovable = true;
             var abelly = belly.create(x + 30, y + 30, 'tree_belly');
             abelly.anchor.setTo(0.5, 0.8);
-            
+            */
 
-
-
+            }
         }
 
         for(y = -GameSettings.bounds; y < GameSettings.bounds; y += 250 ) {
