@@ -11,6 +11,9 @@ let treeClickCounter = 1;
 var cursorSprite;
 var cursorSprite;
 
+
+var worldScale = 1;
+
 let playState = {
     create: function create() {
         game.add.plugin(Phaser.Plugin.Debug);
@@ -167,6 +170,16 @@ let playState = {
 
         Movement.movementHandler(cursors, movementKeys, sam);
         game.debug.text(game.time.fps + "fps, "+ game.time.elapsed + " ms. Min: " + game.time.fpsMin + " Max:" + game.time.fpsMax , 2, 14, "#00ff00");
+
+
+        if (game.input.keyboard.isDown(Phaser.Keyboard.Q)) {
+            worldScale += 0.005;
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+            worldScale -= 0.005;
+        }
+        game.world.scale.set(worldScale);
+        
         
     }
 };

@@ -16,13 +16,13 @@ class Movement {
         sam.body.velocity.x = sam.body.velocity.y = 0;
     
         if(cursors.up.isDown || movementKeys.up.isDown) {
-            sam.body.velocity.y = -75;
+            sam.body.velocity.y = -375;
             sam.animations.play('up');
             keysBeingHeld = true;
         }
 
         if(cursors.down.isDown || movementKeys.down.isDown) {
-            sam.body.velocity.y = 75;
+            sam.body.velocity.y = 375;
             sam.animations.play('down');
             keysBeingHeld = true;
         }
