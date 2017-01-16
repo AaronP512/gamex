@@ -1,7 +1,7 @@
 
 var perf;
 var cursors, movementKeys;
-var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO);//, '', { /*preload: preload, create: create, update: update*/ });
+var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS);//, '', { /*preload: preload, create: create, update: update*/ });
 var sam; var cursors;
 var belly;
 var feet;
@@ -62,7 +62,7 @@ let playState = {
             //let y = Math.random() * 2e3;
             var plant = tomatoes.create(x , y, 'tomato');
             plant.scale.setTo(0.16,0.16);
-            //plant.body.setSize(30, 2, 21, 0); //check
+            plant.body.setSize(30, 2, 21, 0); //check
             plant.body.immovable = true;
                                   
         }
