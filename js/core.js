@@ -28,8 +28,8 @@ let playState = {
  
         game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'grass');
          
-        
-
+        sound = game.add.audio('theme').play();
+        sound.loop = true;
 
         feet = game.add.group();
         feet.enableBody = true;
