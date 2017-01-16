@@ -5,7 +5,8 @@ let loadState = {
         game.load.image('grass', 'assets/grass.png');
         game.load.image('tomato', 'assets/Tomato.png');
         game.load.image('smoke', 'assets/smoke-puff.png');
-
+        game.load.image('pond-a', 'assets/pond-a.png');
+        game.load.image('pond-b', 'assets/pond-b.png');
 
         game.load.spritesheet('sams', 'assets/sam.png', 64, 64, 36); //64,64 old values
         game.time.advancedTiming = true;

@@ -84,6 +84,12 @@ let playState = {
 
 
         for(y = -GameSettings.bounds; y < GameSettings.bounds; y += 250 ) {
+
+            var x = Math.random() * 2e3;
+            var pond = feet.create(x , y, 'pond-a');
+            pond.scale.x = pond.scale.y = 0.5;
+            pond.body.immovable = true;
+
             for(x2 = 0; x2 < 3; x2++) {
 
                 var x = Math.random() * 2e3;
