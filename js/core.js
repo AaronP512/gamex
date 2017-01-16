@@ -50,12 +50,14 @@ let playState = {
         belly.inputEnableChildren = true;
         belly.onChildInputOver.add(function() {
             //this.game.canvas.style.cursor = "move";
+          //  cursorSprite.body.setSize(64,0,55,66);
             cursorSprite.frame = 1;
         }, this);
 
         belly.onChildInputOut.add(function(){
             this.game.canvas.style.cursor = "none";
             cursorSprite.frame = 0;
+           // cursorSprite.body.setSize(45,0,45,0);
             }, this);
 
         
