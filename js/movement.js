@@ -16,25 +16,25 @@ class Movement {
         sam.body.velocity.x = sam.body.velocity.y = 0;
     
         if(cursors.up.isDown || movementKeys.up.isDown) {
-            sam.body.velocity.y = -75;
+            sam.body.velocity.y = -150;
             sam.animations.play('up');
             keysBeingHeld = true;
         }
 
         if(cursors.down.isDown || movementKeys.down.isDown) {
-            sam.body.velocity.y = 75;
+            sam.body.velocity.y = 150;
             sam.animations.play('down');
             keysBeingHeld = true;
         }
 
         if(cursors.left.isDown || movementKeys.left.isDown) {
-            sam.body.velocity.x = -75;
+            sam.body.velocity.x = -150;
             sam.animations.play('left');
             keysBeingHeld = true;
         }
 
         if(cursors.right.isDown || movementKeys.right.isDown) {
-            sam.body.velocity.x = 75;
+            sam.body.velocity.x = 150;
             sam.animations.play('right');
             keysBeingHeld = true;
         }
