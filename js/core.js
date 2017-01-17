@@ -1,4 +1,8 @@
 
+function rand(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 var perf;
 var cursors, movementKeys;
 var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS);//, '', { /*preload: preload, create: create, update: update*/ });
@@ -10,6 +14,8 @@ let treeClickCounter = 1;
 
 var cursorSprite;
 var cursorSprite;
+
+var animals;
 
 
 var worldScale = 1;
@@ -33,6 +39,11 @@ let playState = {
          
         sound = game.add.audio('theme').play();
         sound.loop = true;
+
+        animals = new Animals(game);
+        for(i = 0; i < 100; i++) animals.create();
+
+
 
         feet = game.add.group();
         feet.enableBody = true;
@@ -153,7 +164,7 @@ let playState = {
         new HUD(game);
 
 
-
+        
 
     },
 
@@ -181,7 +192,7 @@ let playState = {
             worldScale -= 0.005;
         }
         game.world.scale.set(worldScale);
-        
+        animals.move();
         
     }
 };

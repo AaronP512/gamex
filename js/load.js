@@ -8,6 +8,9 @@ let loadState = {
         game.load.image('pond-a', 'assets/pond-a.png');
         game.load.image('pond-b', 'assets/pond-b.png');
 
+        /* Animols */
+        game.load.spritesheet('cats', 'assets/cats.png', 48, 48, 12 * 9);
+
         game.load.spritesheet('sams', 'assets/sam.png', 64, 64, 36); //64,64 old values
         game.time.advancedTiming = true;
 
