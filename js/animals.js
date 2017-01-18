@@ -51,7 +51,7 @@ class Animals {
 		//kitty.animations.play('r');
 		let dir = rand(0, 3);
 		kitty.z = this.kittyCount++;
-		this.kittyList.push({id: kitty.z, direction: dir, changedDirections: 0});
+		this.kittyList.push({id: kitty.z, direction: dir, changedDirections: (new Date().getTime()) + Math.random() * 10000});
 		
 
 
