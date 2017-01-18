@@ -4,7 +4,7 @@ function rand(min, max) {
 
 var perf;
 var cursors, movementKeys;
-var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS);//, '', { /*preload: preload, create: create, update: update*/ });
+//var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS);//, '', { /*preload: preload, create: create, update: update*/ });
 var sam; var cursors;
 var belly;
 var feet;
@@ -15,6 +15,7 @@ var cursorSprite;
 var cursorSprite;
 
 var animals;
+
 
 
 var worldScale = 1, nightfall;
@@ -44,7 +45,16 @@ let playState = {
         animals = new Animals(game);
         for(i = 0; i < 100; i++) animals.create();
 
+        caves = game.add.group();
+        caves.inputEnableChildren = true;
 
+        cave = caves.create(1000, 400, 'cave_e');
+        caves.onChildInputDown.add(function(sprite) { 
+            //console.log("lol"); 
+            
+            game.state.start("test");
+            
+        }, this);
 
         feet = game.add.group();
         feet.enableBody = true;
@@ -166,6 +176,7 @@ let playState = {
        nightfall = game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'night');
         nightfall.alpha = 0.1;
         new HUD(game);
+// setTimeout(function() { animals.followenabled = true; }, 10000);
 
 
         setInterval(function() { 
@@ -208,8 +219,10 @@ let playState = {
             worldScale = 1;
         }
         game.world.scale.set(worldScale);
+       
         animals.move();
-
+        animals.follow(sam);
+       
 
         
 
@@ -223,4 +236,6 @@ let playState = {
 game.state.add('boot', bootState);
 game.state.add('load', loadState);
 game.state.add('play', playState);
+
+game.state.add('test', testState);
 game.state.start("boot");
