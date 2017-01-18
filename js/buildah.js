@@ -20,12 +20,15 @@ var currentPlaceableObject = 0;
 
 
 var placedObjects = [];
+var bellyList = [];
 
 var depend_tree;
 
-
+var placedGroup, bellies;
 
 var worldScale = 1;
+
+var spriteCounter = 0;
 
 let playState = {
     create: function create() {
@@ -75,14 +78,20 @@ let playState = {
         depend_tree = game.add.sprite(0, 0, 'tree_belly');
 
  
-        placeableObjects.push(game.add.sprite(0, 0, 'tree_foot'));
+        //placeableObjects.push(game.add.sprite(0, 0, 'tree_foot'));
         placeableObjects.push(game.add.sprite(0, 0, 'tomato'));
         placeableObjects.push(game.add.sprite(0, 0, 'pond-a'));
         placeableObjects.push(game.add.sprite(0, 0, 'pond-b'));
 
+        placedGroup = game.add.group();
+        bellies = game.add.group();
+        bellies.inputEnableChildren = true;
+        placedGroup.inputEnableChildren = true;
 
         game.input.mouse.mouseWheelCallback =  function (event) {   
-            console.log(game.input.mouse);
+          
+          
+            
            if(game.input.mouse.wheelDelta == -1) {
                if(currentPlaceableObject > 0) {
                    currentPlaceableObject--;
@@ -96,16 +105,90 @@ let playState = {
         };
 
 
-        game.input.mouse.mouseDownCallback =  function (event) {   
-                placedObjects.push(game.add.sprite(cursorSprite.x, cursorSprite.y, placeableObjects[currentPlaceableObject].key));
+        
 
-            //dependencies
-            if(placeableObjects[currentPlaceableObject].key == 'tree_foot') {
-                let abelly = game.add.sprite(cursorSprite.x + 30, cursorSprite.y + 30, 'tree_belly');
-                abelly.anchor.setTo(0.5, 0.8);
-                placedObjects.push(abelly);
+        game.input.mouse.mouseDownCallback =  function (event) {   
+            
+            if(game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)) {
+
+                let element = placedGroup.create(cursorSprite.x, cursorSprite.y, placeableObjects[currentPlaceableObject].key);
+                element.z = spriteCounter++;
+                console.log("bark as " + element.z);
+                
+
+                placedObjects.push(element);
+
+                //dependencies
+                if(placeableObjects[currentPlaceableObject].key == 'tree_foot') {
+                    let abelly =  bellies.create(cursorSprite.x + 30, cursorSprite.y + 30, 'tree_belly');
+                    abelly.z = spriteCounter++;
+                    //bellyList.push(abelly);
+                    console.log("belly as "+ abelly.z);
+                    abelly.anchor.setTo(0.5, 0.8);
+                    placedObjects.push(abelly);
+                }
+
+                $.post("mapper.php", { x: element.x.toFixed(0), y: element.y.toFixed(0), a:1, i:element.key }, function(data) {
+                    console.log(data);
+                });
             }
+
+                
         };
+
+
+        placedGroup.onChildInputDown.add(function (sprite) {
+            let id = sprite.z;
+            console.log("destory " + id + ": " + parseFloat(sprite.x).toFixed(0) + "," +  parseFloat(sprite.y).toFixed(0));
+            /*
+            for(let y = 0; y < placedObjects.length; y++) {
+                if (sprite.z + 1 == placedObjects[y].z) {
+                    console.log("destorying " + y);
+                    placedObjects[y].destroy();
+                }.
+            }
+            */
+
+
+
+            $.post("mapper.php", { x:  parseFloat(sprite.x).toFixed(0), y: parseFloat(sprite.y).toFixed(0), a:0, i:sprite.key }, function(data) {
+                console.log(data);
+            });
+
+            sprite.destroy();
+
+        }, this);
+
+        bellies.onChildInputDown.add(function (sprite) {
+            let id = sprite.z;
+            console.log("destorybelly " + id);
+            sprite.destroy();
+
+        }, this);
+
+        setTimeout(function () {
+            $.post("mapper.php", { a:2 }, function(datax) {
+                console.log(datax);
+                let data = JSON.parse(datax);
+                for(let c = 0; c < data.length; c++) {
+                    let element = placedGroup.create(data[c].x, data[c].y, data[c].i);
+                        element.z = spriteCounter++;
+                        console.log("creating " + element.z + ", "+ element.key);
+                        
+
+                        placedObjects.push(element);
+
+                        //dependencies
+                        if(data[i] == 'tree_foot') {
+                            let abelly =  bellies.create(data[c].x + 30, data[c].y + 30, 'tree_belly');
+                            //bellyList.push(abelly);
+                            console.log("creating belly as "+ abelly.z);
+                            abelly.anchor.setTo(0.5, 0.8);
+                            placedObjects.push(abelly);
+                        }
+                }
+            });
+        }, 2000);
     },
 
     update:function update() {
@@ -159,3 +242,6 @@ game.state.add('boot', bootState);
 game.state.add('load', loadState);
 game.state.add('play', playState);
 game.state.start("boot");
+
+
+
