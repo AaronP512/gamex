@@ -161,6 +161,9 @@ let playState = {
 
         cursorSprite = game.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'pointers');
         //cursorSprite.visible = false;
+        
+        var nightfall = game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'night');
+        nightfall.alpha = 0.5;
         new HUD(game);
 
 

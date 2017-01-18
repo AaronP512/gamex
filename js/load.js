@@ -7,6 +7,7 @@ let loadState = {
         game.load.image('smoke', 'assets/smoke-puff.png');
         game.load.image('pond-a', 'assets/pond-a_lay.png');
         game.load.image('pond-b', 'assets/pond-b_lay.png');
+        game.load.image('night', 'assets/night2.png');
 
         /* Animols */
         game.load.spritesheet('cats', 'assets/cats.png', 48, 48, 12 * 9);
