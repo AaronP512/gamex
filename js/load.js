@@ -20,7 +20,7 @@ let loadState = {
 
         /* Animols */
         game.load.spritesheet('catsx', 'assets/cats.png', 48, 48, 12 * 9);
-        game.load.spritesheet('cats', 'assets/monster2.png', 77.6, 54.6, 6 * 8);
+        game.load.spritesheet('rap', 'assets/monster2.png', 77.6, 54.6, 6 * 8);
 
         game.load.spritesheet('sams', 'assets/sam.png', 64, 64, 36); //64,64 old values
         game.time.advancedTiming = true;
