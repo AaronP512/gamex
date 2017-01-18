@@ -166,6 +166,9 @@ let playState = {
 
         }, this);
 
+
+
+
         setTimeout(function () {
             $.post("mapper.php", { a:2 }, function(datax) {
                 console.log(datax);
