@@ -17,7 +17,9 @@ var cursorSprite;
 var animals;
 
 
-var worldScale = 1;
+var worldScale = 1, nightfall;
+
+var enviromentAlpha = 1;
 
 let playState = {
     create: function create() {
@@ -161,12 +163,21 @@ let playState = {
         cursorSprite = game.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'pointers');
         //cursorSprite.visible = false;
         
-        var nightfall = game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'night');
-        nightfall.alpha = 0.5;
+       nightfall = game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'night');
+        nightfall.alpha = 0.1;
         new HUD(game);
 
 
-        
+        setInterval(function() { 
+            if(enviromentAlpha == 1) {
+                nightfall.alpha += 0.1;
+                if(nightfall.alpha >= 0.95) enviromentAlpha = 0;
+            } else {
+                nightfall.alpha -= 0.1;
+                if(nightfall.alpha <= 0.05) enviromentAlpha = 1;
+            }
+        }, 60000);
+
 
     },
 
@@ -187,15 +198,21 @@ let playState = {
         game.debug.text(game.time.fps + "fps, "+ game.time.elapsed + " ms. Min: " + game.time.fpsMin + " Max:" + game.time.fpsMax , 2, 14, "#00ff00");
 
 
-        if (game.input.keyboard.isDown(Phaser.Keyboard.Q)) {
-            worldScale += 0.005;
-        }
-        else if (game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+        if (game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
             worldScale -= 0.005;
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.X)) {
+            worldScale += 0.005;
+        } 
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.C)) {
+            worldScale = 1;
         }
         game.world.scale.set(worldScale);
         animals.move();
+
+
         
+
     }
 };
 
