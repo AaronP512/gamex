@@ -3,10 +3,10 @@ let loadState = {
         game.load.image('tree_belly', 'assets/tre.png');
         game.load.image('tree_foot', 'assets/bark.png');
         game.load.image('grass', 'assets/grass.png');
-        game.load.image('tomato', 'assets/Tomato.png');
+        game.load.image('tomato', 'assets/Tomato_lay.png');
         game.load.image('smoke', 'assets/smoke-puff.png');
-        game.load.image('pond-a', 'assets/pond-a.png');
-        game.load.image('pond-b', 'assets/pond-b.png');
+        game.load.image('pond-a', 'assets/pond-a_lay.png');
+        game.load.image('pond-b', 'assets/pond-b_lay.png');
 
         /* Animols */
         game.load.spritesheet('cats', 'assets/cats.png', 48, 48, 12 * 9);
