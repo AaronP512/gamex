@@ -9,9 +9,18 @@ let loadState = {
         game.load.image('pond-a', 'assets/pond-a_lay.png');
         game.load.image('pond-b', 'assets/pond-b_lay.png');
         game.load.image('night', 'assets/night2.png');
+        game.load.image('cave_e', 'assets/cave_e.png');
+        game.load.image('cave_1', 'assets/cave_1.png');
+        game.load.image('cave_2', 'assets/cave_2.png');
+        game.load.image('cave_3', 'assets/cave_3.png');
+        game.load.image('cave_4', 'assets/cave_4.png');
+        game.load.image('cave_5', 'assets/cave_5.png');
+        game.load.image('cave_6', 'assets/cave_6.png');
+        game.load.image('cave_7', 'assets/cave_7.png');
 
         /* Animols */
-        game.load.spritesheet('cats', 'assets/cats.png', 48, 48, 12 * 9);
+        game.load.spritesheet('catsx', 'assets/cats.png', 48, 48, 12 * 9);
+        game.load.spritesheet('cats', 'assets/monster2.png', 77.6, 54.6, 6 * 8);
 
         game.load.spritesheet('sams', 'assets/sam.png', 64, 64, 36); //64,64 old values
         game.time.advancedTiming = true;

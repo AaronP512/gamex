@@ -4,12 +4,15 @@ class Animals {
 		this.animals = game.add.group();
 		this.kittyList = []
 		this.kittyCount = 0;
+		this.followenabled = false;
         //.enableBody = true;
 
 
 	}
 
 	move() {
+		if(this.followenabled == true) return;
+
 		let animalthis = this;
 		this.animals.forEach(function(item) {
 			
@@ -37,6 +40,40 @@ class Animals {
 				animalthis.kittyList[item.z].changedDirections = now;
 				animalthis.kittyList[item.z].direction = rand(0, 3);
 			}
+			//console.log(item);
+    	});
+	}
+
+	follow(sam) {
+		if(this.followenabled == false) return;
+
+		let animalthis = this;
+		this.animals.forEach(function(item) {
+			
+			let anim = "l";
+
+			if(item.position.x < sam.position.x) {
+				item.position.x++;
+				anim = "r";
+			}
+			else {
+				item.position.x--;
+				anim = "l";
+			}
+
+			if(item.position.y < sam.position.y) {
+				item.position.y++;
+				anim = "d";
+			}
+			else {
+				item.position.y--;
+				anim = "u";
+			}
+			
+			item.animations.play(anim);
+			
+
+
 			//console.log(item);
     	});
 	}
