@@ -78,7 +78,7 @@ let playState = {
         depend_tree = game.add.sprite(0, 0, 'tree_belly');
 
  
-        //placeableObjects.push(game.add.sprite(0, 0, 'tree_foot'));
+        placeableObjects.push(game.add.sprite(0, 0, 'tree_foot'));
         placeableObjects.push(game.add.sprite(0, 0, 'tomato'));
         placeableObjects.push(game.add.sprite(0, 0, 'pond-a'));
         placeableObjects.push(game.add.sprite(0, 0, 'pond-b'));
@@ -138,25 +138,26 @@ let playState = {
 
 
         placedGroup.onChildInputDown.add(function (sprite) {
-            let id = sprite.z;
-            console.log("destory " + id + ": " + parseFloat(sprite.x).toFixed(0) + "," +  parseFloat(sprite.y).toFixed(0));
-            /*
-            for(let y = 0; y < placedObjects.length; y++) {
-                if (sprite.z + 1 == placedObjects[y].z) {
-                    console.log("destorying " + y);
-                    placedObjects[y].destroy();
-                }.
+            if(game.input.keyboard.isDown(Phaser.Keyboard.CONTROL )) {
+                let id = sprite.z;
+                console.log("destory " + id + ": " + parseFloat(sprite.x).toFixed(0) + "," +  parseFloat(sprite.y).toFixed(0));
+                /*
+                for(let y = 0; y < placedObjects.length; y++) {
+                    if (sprite.z + 1 == placedObjects[y].z) {
+                        console.log("destorying " + y);
+                        placedObjects[y].destroy();
+                    }.
+                }
+                */
+
+
+
+                $.post("mapper.php", { x:  parseFloat(sprite.x).toFixed(0), y: parseFloat(sprite.y).toFixed(0), a:0, i:sprite.key }, function(data) {
+                    console.log(data);
+                });
+
+                sprite.destroy();
             }
-            */
-
-
-
-            $.post("mapper.php", { x:  parseFloat(sprite.x).toFixed(0), y: parseFloat(sprite.y).toFixed(0), a:0, i:sprite.key }, function(data) {
-                console.log(data);
-            });
-
-            sprite.destroy();
-
         }, this);
 
         bellies.onChildInputDown.add(function (sprite) {
@@ -175,20 +176,21 @@ let playState = {
                 let data = JSON.parse(datax);
                 for(let c = 0; c < data.length; c++) {
                     let element = placedGroup.create(data[c].x, data[c].y, data[c].i);
-                        element.z = spriteCounter++;
-                        console.log("creating " + element.z + ", "+ element.key);
+                    element.z = spriteCounter++;
+                    console.log("creating " + element.z + ", "+ element.key);
+                    
+
+                    placedObjects.push(element);
+
+                    //dependencies
+                    if(data[c].i == 'tree_foot') {
                         
-
-                        placedObjects.push(element);
-
-                        //dependencies
-                        if(data[i] == 'tree_foot') {
-                            let abelly =  bellies.create(data[c].x + 30, data[c].y + 30, 'tree_belly');
-                            //bellyList.push(abelly);
-                            console.log("creating belly as "+ abelly.z);
-                            abelly.anchor.setTo(0.5, 0.8);
-                            placedObjects.push(abelly);
-                        }
+                        let abelly =  bellies.create(parseInt(data[c].x) + 30, parseInt(data[c].y) + 30, 'tree_belly');
+                        //bellyList.push(abelly);
+                        console.log("creating belly as "+ abelly.z);
+                        abelly.anchor.setTo(0.5, 0.8);
+                        placedObjects.push(abelly);
+                    }
                 }
             });
         }, 2000);
@@ -196,10 +198,6 @@ let playState = {
 
     update:function update() {
         
-
-
-
-
         
         cursorSprite.x = game.input.activePointer.x + game.camera.x;
         cursorSprite.y = game.input.mousePointer.y + game.camera.y;
@@ -214,10 +212,8 @@ let playState = {
             placeableObjects[i].y = game.input.mousePointer.y + game.camera.y;
         }
 
-
-        Movement.movementHandler(cursors, movementKeys, sam);
+        Movement.movementHandler(cursors, movementKeys, sam, 950);
         game.debug.text(game.time.fps + "fps, "+ game.time.elapsed + " ms. Min: " + game.time.fpsMin + " Max:" + game.time.fpsMax , 2, 14, "#00ff00");
-
 
 
 

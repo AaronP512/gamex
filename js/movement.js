@@ -1,7 +1,6 @@
 
 
 class Movement {
-
     static getMovementKeys() {
             this.up = game.input.keyboard.addKey(Phaser.Keyboard.W);
             this.down = game.input.keyboard.addKey(Phaser.Keyboard.S);
@@ -10,31 +9,31 @@ class Movement {
             return this;
     }
 
-    static movementHandler(cursors, movementKeys, sam) {
+    static movementHandler(cursors, movementKeys, sam, speed) {
         let keysBeingHeld = false;
 
         sam.body.velocity.x = sam.body.velocity.y = 0;
     
         if(cursors.up.isDown || movementKeys.up.isDown) {
-            sam.body.velocity.y = -150;
+            sam.body.velocity.y = -speed;
             sam.animations.play('up');
             keysBeingHeld = true;
         }
 
         if(cursors.down.isDown || movementKeys.down.isDown) {
-            sam.body.velocity.y = 150;
+            sam.body.velocity.y = speed;
             sam.animations.play('down');
             keysBeingHeld = true;
         }
 
         if(cursors.left.isDown || movementKeys.left.isDown) {
-            sam.body.velocity.x = -150;
+            sam.body.velocity.x = -speed;
             sam.animations.play('left');
             keysBeingHeld = true;
         }
 
         if(cursors.right.isDown || movementKeys.right.isDown) {
-            sam.body.velocity.x = 150;
+            sam.body.velocity.x = speed;
             sam.animations.play('right');
             keysBeingHeld = true;
         }

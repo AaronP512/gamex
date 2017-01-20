@@ -205,7 +205,7 @@ let playState = {
         cursorSprite.x = game.input.activePointer.x + game.camera.x;
         cursorSprite.y = game.input.mousePointer.y + game.camera.y;
 
-        Movement.movementHandler(cursors, movementKeys, sam);
+        Movement.movementHandler(cursors, movementKeys, sam, 150);
         game.debug.text(game.time.fps + "fps, "+ game.time.elapsed + " ms. Min: " + game.time.fpsMin + " Max:" + game.time.fpsMax , 2, 14, "#00ff00");
 
 
