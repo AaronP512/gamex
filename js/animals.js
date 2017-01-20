@@ -79,16 +79,17 @@ class Animals {
 	}
 
 	create() {
-		let kitty = this.animals.create(576, 384, 'cats');
-		kitty.animations.add('d',[0,1,2],3,true);
-		kitty.animations.add('l',[12,13,14],3,true);
-		kitty.animations.add('r',[24,25,26],3,true);
-		kitty.animations.add('u',[36,37,38],3,true);
+		let rap = this.animals.create(576, 384, 'rap');
+		rap.scale.setTo(2,2);
+		rap.animations.add('d',[24,25,26,27,28,29],4,true);
+		rap.animations.add('l',[12,13,14,15,16,17],4,true);
+		rap.animations.add('r',[0,1,2,3,4,5],4,true);
+		rap.animations.add('u',[37,38,39,40,41,42],4,true);
 		
 		//kitty.animations.play('r');
 		let dir = rand(0, 3);
-		kitty.z = this.kittyCount++;
-		this.kittyList.push({id: kitty.z, direction: dir, changedDirections: (new Date().getTime()) + Math.random() * 10000});
+		rap.z = this.kittyCount++;
+		this.kittyList.push({id: rap.z, direction: dir, changedDirections: (new Date().getTime()) + Math.random() * 10000});
 		
 
 
