@@ -18,6 +18,8 @@ let loadState = {
         game.load.image('cave_6', 'assets/cave_6.png');
         game.load.image('cave_7', 'assets/cave_7.png');
 
+        game.load.image('clock', 'assets/clock.png');        
+
         /* Animols */
         game.load.spritesheet('catsx', 'assets/cats.png', 48, 48, 12 * 9);
         game.load.spritesheet('rap', 'assets/monster2.png', 77.6, 54.6, 6 * 8);

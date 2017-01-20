@@ -204,8 +204,11 @@ let playState = {
             }
         }, 60000);
 
+        clock = game.add.sprite(window.innerWidth - 128, 0, 'clock');
+        clock.fixedToCamera = true;
+        clock.scale.setTo(0.07, 0.07);
 
-    },
+    },  
 
     update:function update() {
         
