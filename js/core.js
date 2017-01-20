@@ -9,6 +9,8 @@ var sam; var cursors;
 var belly;
 var feet;
 
+var otherplayer;
+
 let treeClickCounter = 1;
 
 var cursorSprite;
@@ -61,6 +63,19 @@ let playState = {
 
         tomatoes = game.add.group();
         tomatoes.enableBody = true;
+
+        otherplayer = game.add.sprite(800, 400, 'sams');
+        otherplayer.visible = false;
+        otherplayer.enableBody = true;
+        game.physics.arcade.enable(otherplayer);
+        otherplayer.body.setSize(50, 42, 7, 15); //check
+
+        otherplayer.animations.add('up',[0,1,2,3,4,5,6,7,8],8,true);
+        otherplayer.animations.add('left',[9,10,11,12,13,14,15,16,17],8,true);
+        otherplayer.animations.add('down',[18,19,20,21,22,23,24,25,26],8,true);
+        otherplayer.animations.add('right',[27,28,29,30,31,32,33,34,35],8,true);
+
+
 
         sam = game.add.sprite(800, 400, 'sams');
         sam.enableBody = true;
@@ -239,3 +254,41 @@ game.state.add('play', playState);
 
 game.state.add('test', testState);
 game.state.start("boot");
+
+
+socket.on('connect',function() {
+            console.log('Client has connected to the server!');
+});
+// Add a connect listener
+socket.on('message',function(data) {
+    console.log('Received a message from the server!',data);
+
+    var cmd = data.split(" ");
+    switch(cmd[0]) {
+      case "PPOS": 
+        if(otherplayer) {
+            otherplayer.x = parseInt(cmd[2]);
+            otherplayer.y = parseInt(cmd[3]);
+
+            otherplayer.body.velocity.x = parseInt(cmd[4]);
+            otherplayer.body.velocity.y = parseInt(cmd[5]);
+
+            otherplayer.visible = true;
+
+            otherplayer.animations.play(cmd[6]);
+        }
+        
+        break;
+      
+    }
+
+});
+// Add a disconnect listener
+socket.on('disconnect',function() {
+    console.log('The client has disconnected!');
+});
+
+// Sends a message to the server via sockets
+function sendMessageToServer(message) {
+    socket.send(message);
+}
