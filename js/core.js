@@ -32,6 +32,10 @@ var enviromentAlpha = 1;
 
 var objs;
 
+
+var players;
+
+
 let playState = {
     create: function create() {
         game.add.plugin(Phaser.Plugin.Debug);
@@ -68,8 +72,6 @@ let playState = {
 
 
 
- objs = game.add.group();
-        //objs.enableBody = true;
 
         feet = game.add.group();
         feet.enableBody = true;
@@ -91,7 +93,7 @@ let playState = {
 
 
 
-
+        players = new Players(game);
 
 
 
@@ -154,78 +156,7 @@ let playState = {
 
 
         loadobjects(game);
-/*
-        for(y = -GameSettings.bounds; y < GameSettings.bounds; y += 250 ) {
 
-            var x = Math.random() * 2e3;
-            var pond = feet.create(x , y, 'pond-a');
-            pond.scale.x = pond.scale.y = 0.5;
-            pond.body.immovable = true;
-
-            for(x2 = 0; x2 < 3; x2++) {
-
-                var x = Math.random() * 2e3;
-                var bark = feet.create(x , y, 'tree_foot');
-                bark.body.setSize(30, 2, 21, 0); //check
-                bark.body.immovable = true;
-
-                var abelly = belly.create(x + 30, y + 30, 'tree_belly');
-                abelly.anchor.setTo(0.5, 0.8);
-
-    
-
-            }
-        }
-
-        for(y = -GameSettings.bounds; y < GameSettings.bounds; y += 250 ) {
-            var x = Math.random() * 2e3;
-            //let y = Math.random() * 2e3;
-            var plant = tomatoes.create(x , y, 'tomato');
-            //plant.scale.setTo(0.16,0.16);
-            plant.body.setSize(30, 2, 21, 0); //check
-            plant.body.immovable = true;
-                                  
-        }
-        
-*/
-
-
-
-        /* Fetch map from database */
-
-        // This failed horribly...
-
-        /*
-        setTimeout(function () {
-            $.post("mapper.php", { a:2 }, function(datax) {
-                console.log(datax);
-                let data = JSON.parse(datax);
-                for(let c = 0; c < data.length; c++) {
-                    var element = game.add.sprite(data[c].x, data[c].y, data[c].i);
-                    
-                    game.physics.arcade.enable(element);
-                    element.enableBody = true;
-                    console.log("creating " + element.z + ", "+ element.key);
-                    
-                        
-                    //dependencies
-                    if(data[c].i == 'tree_foot') {
-
-                        element.body.setSize(30, 2, 21, 0); //check
-                        element.body.immovable = true;
-                        
-                        let abelly =  game.add.sprite(parseInt(data[c].x) + 30, parseInt(data[c].y) + 30, 'tree_belly');
-                        //bellyList.push(abelly);
-                        console.log("creating belly as "+ abelly.z);
-                        abelly.anchor.setTo(0.5, 0.8);
-                    }
-                }
-                
-            });
-        }, 2000);
-
-
-        */
 
 
 
@@ -352,7 +283,11 @@ socket.on('message',function(data) {
 
     var cmd = data.split(" ");
     switch(cmd[0]) {
-      case "PPOS": 
+      case "PPOS":
+
+      if(players) { players.updateData(cmd); }
+
+       /*
         if(otherplayer) {
 
             
@@ -380,7 +315,10 @@ socket.on('message',function(data) {
 
             connectedPlayers[cmd[1]] = { x: parseInt(cmd[2]), y: parseInt(cmd[3]), vx: parseInt(cmd[4]), vy: parseInt(cmd[5]),  anim: cmd[6]};
         }
-        
+        */
+
+
+
         break;
       
     }
