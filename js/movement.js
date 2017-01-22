@@ -44,7 +44,7 @@ class Movement {
         }
 
         //console.log(sam.animations.currentAnim.name);
-        if(typeof socket !== 'undefined') { //' && socket
+        if(typeof socket !== 'undefined' && keysBeingHeld) { //' && socket
             socket.send("POS " + sam.position.x.toFixed(0) + " " + sam.position.y.toFixed(0) + " " + sam.body.velocity.x.toFixed(0) + " " + sam.body.velocity.y.toFixed(0) + " " + sam.animations.currentAnim.name); 
         }
         

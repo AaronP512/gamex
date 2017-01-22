@@ -15,6 +15,64 @@ if(isset($_POST['a']) && $_POST['a'] == '2') {
     die;
 }
 
+
+if(isset($_GET['a']) && $_GET['a'] == '3') {
+    $array = array();
+    $r = mysqli_query($conn, "SELECT * FROM map")  or die(mysql_error());
+
+    ?>
+    function loadobjects(game) {
+    <?php
+        
+        while($row = mysqli_fetch_assoc($r)) {
+            $x = $row['x'];
+            $y = $row['y'];
+            $i = $row['i'];
+
+            ?> 
+
+            
+                var element = feet.create(<?php echo $x; ?>, <?php echo $y; ?>, "<?php echo $i; ?>");
+                console.log("creating " + element.z + ", "+ element.key);
+
+               // game.physics.arcade.enable(element);
+                //element.enableBody = true;
+            
+            <?php if($i == 'tree_foot') { ?>
+
+                element.body.setSize(30, 2, 21, 0); //check
+                element.body.immovable = true;
+                
+                var abelly =  game.add.sprite(<?php echo $x; ?> + 30, <?php echo $y; ?> + 30, 'tree_belly');
+                console.log("creating belly as "+ abelly.z);
+                abelly.anchor.setTo(0.5, 0.8);
+        
+            <?php } ?>
+            
+            <?php
+        }
+
+    ?> } <?php
+    die;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+                    
+
+
 $a = $_POST['a'];
 $x = $_POST['x'];
 $y = $_POST['y'];

@@ -24,7 +24,7 @@ setInterval(function() {
       if(clients[player].obj.id != clients[xplayer].obj.id) clients[player].obj.send("PPOS " + clients[xplayer].obj.id + " " + clients[xplayer].x + " " + clients[xplayer].y  + " " + clients[xplayer].vx + " " + clients[xplayer].vy + " " + clients[xplayer].anim);
     }
   }
-}, 500);
+}, 36);
 
 
 
