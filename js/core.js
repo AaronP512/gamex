@@ -268,22 +268,32 @@ let playState = {
         clock_hr.fixedToCamera = true;
         clock_hr.scale.setTo(0.07, 0.07);
         clock_hr.anchor.setTo(0.5, 0.5);
+        clock_hr.rotation = 1.6;
 
         clock_min = game.add.sprite(window.innerWidth - 95, 65 , 'minute');
         clock_min.fixedToCamera = true;
         clock_min.scale.setTo(0.07, 0.07);
         clock_min.anchor.setTo(0.5, 0.5);
+        clock_min.rotation = 1.6;
+
+        setInterval(function() { 
+
+            clock_hr.angle += 3;
+
+        }, 500);
+
+          setInterval(function() { 
+
+            clock_min.angle += 3;
+
+        }, 42); 
+       
 
     },  
 
     update:function update() {
 
 
-        setInterval(function() { 
-
-            clock_hr.angle += 0.1;
-
-        }, 60000);
        
         
         game.physics.arcade.collide(sam, feet);

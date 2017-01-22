@@ -33,6 +33,7 @@ if(isset($_GET['a']) && $_GET['a'] == '3') {
 
             
                 var element = feet.create(<?php echo $x; ?>, <?php echo $y; ?>, "<?php echo $i; ?>");
+                element.body.immovable = true;
                 console.log("creating " + element.z + ", "+ element.key);
 
                // game.physics.arcade.enable(element);
