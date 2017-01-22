@@ -19,10 +19,15 @@ var cursorSprite;
 var animals;
 
 
+var connectedPlayers = [];
 
 var worldScale = 1, nightfall;
 
 var enviromentAlpha = 1;
+
+
+
+var objs;
 
 let playState = {
     create: function create() {
@@ -44,8 +49,8 @@ let playState = {
         //sound = game.add.audio('theme').play();
         //sound.loop = true;
 
-        animals = new Animals(game);
-        for(i = 0; i < 100; i++) animals.create();
+        //animals = new Animals(game);
+        //for(i = 0; i < 100; i++) animals.create();
 
         caves = game.add.group();
         caves.inputEnableChildren = true;
@@ -57,6 +62,11 @@ let playState = {
             game.state.start("test");
             
         }, this);
+
+
+
+ objs = game.add.group();
+        //objs.enableBody = true;
 
         feet = game.add.group();
         feet.enableBody = true;
@@ -77,11 +87,21 @@ let playState = {
 
 
 
-        sam = game.add.sprite(800, 400, 'sams');
+
+
+
+
+
+
+
+
+
+        sam = game.add.sprite(0, 0, 'sams');
         sam.enableBody = true;
         sam.scale.setTo(1.5,1.5);
         game.physics.arcade.enable(sam);
         sam.body.setSize(50, 42, 7, 15); //check
+
 
         belly = game.add.group();
         belly.inputEnableChildren = true;
@@ -96,6 +116,10 @@ let playState = {
             cursorSprite.frame = 0;
            // cursorSprite.body.setSize(45,0,45,0);
             }, this);
+
+
+
+
 
         
         belly.onChildInputDown.add(function (sprite) {
@@ -125,6 +149,9 @@ let playState = {
         }, this);
 
 
+
+        loadobjects(game);
+/*
         for(y = -GameSettings.bounds; y < GameSettings.bounds; y += 250 ) {
 
             var x = Math.random() * 2e3;
@@ -142,24 +169,7 @@ let playState = {
                 var abelly = belly.create(x + 30, y + 30, 'tree_belly');
                 abelly.anchor.setTo(0.5, 0.8);
 
-            /*
-            var x = Math.random() * 2e3;
-            //let y = Math.random() * 2e3;
-            var bark = feet.create(x , y, 'tree_foot');
-            bark.body.setSize(30, 2, 21, 0); //check
-            bark.body.immovable = true;
-            //foot.body.immovable = false;
-            //game.add.sprite(x - 60, y - 170, 'tree_belly');
-            var abelly = belly.create(x + 30 , y + 30, 'tree_belly');
-            abelly.anchor.setTo(0.5, 0.8);
-
-            var x = Math.random() * 2e3 *-1;
-            var bark = feet.create(x , y, 'tree_foot');
-            bark.body.setSize(30, 2, 21, 0); //check
-            bark.body.immovable = true;
-            var abelly = belly.create(x + 30, y + 30, 'tree_belly');
-            abelly.anchor.setTo(0.5, 0.8);
-            */
+    
 
             }
         }
@@ -174,6 +184,49 @@ let playState = {
                                   
         }
         
+*/
+
+
+
+        /* Fetch map from database */
+
+        // This failed horribly...
+
+        /*
+        setTimeout(function () {
+            $.post("mapper.php", { a:2 }, function(datax) {
+                console.log(datax);
+                let data = JSON.parse(datax);
+                for(let c = 0; c < data.length; c++) {
+                    var element = game.add.sprite(data[c].x, data[c].y, data[c].i);
+                    
+                    game.physics.arcade.enable(element);
+                    element.enableBody = true;
+                    console.log("creating " + element.z + ", "+ element.key);
+                    
+                        
+                    //dependencies
+                    if(data[c].i == 'tree_foot') {
+
+                        element.body.setSize(30, 2, 21, 0); //check
+                        element.body.immovable = true;
+                        
+                        let abelly =  game.add.sprite(parseInt(data[c].x) + 30, parseInt(data[c].y) + 30, 'tree_belly');
+                        //bellyList.push(abelly);
+                        console.log("creating belly as "+ abelly.z);
+                        abelly.anchor.setTo(0.5, 0.8);
+                    }
+                }
+                
+            });
+        }, 2000);
+
+
+        */
+
+
+
+
         game.camera.x = game.camera.y = 100;
        
         sam.animations.add('up',[0,1,2,3,4,5,6,7,8],8,true);
@@ -213,7 +266,7 @@ let playState = {
     update:function update() {
         
         game.physics.arcade.collide(sam, feet);
-        game.physics.arcade.overlap(sam, feet, function() { alert("boom"); }, null, this);
+      //  game.physics.arcade.overlap(sam, feet, function() { alert("boom"); }, null, this);
 
         game.physics.arcade.collide(sam, tomatoes);
         game.physics.arcade.overlap(sam, tomatoes, function() { alert("spooch"); }, null, this);
@@ -238,8 +291,8 @@ let playState = {
         }
         game.world.scale.set(worldScale);
        
-        animals.move();
-        animals.follow(sam);
+        //animals.move();
+        //animals.follow(sam);
        
 
         
@@ -270,15 +323,31 @@ socket.on('message',function(data) {
     switch(cmd[0]) {
       case "PPOS": 
         if(otherplayer) {
+
+            
+
             otherplayer.x = parseInt(cmd[2]);
             otherplayer.y = parseInt(cmd[3]);
 
-            otherplayer.body.velocity.x = parseInt(cmd[4]);
-            otherplayer.body.velocity.y = parseInt(cmd[5]);
-
+           otherplayer.body.velocity.x = 0;
+           otherplayer.body.velocity.y = 0;
+           otherplayer.animations.stop();
             otherplayer.visible = true;
 
-            otherplayer.animations.play(cmd[6]);
+            if(connectedPlayers[cmd[1]]) {
+                 if(parseInt(cmd[2]) == connectedPlayers[cmd[1]].x && parseInt(cmd[3]) == connectedPlayers[cmd[1]].y) {
+                    otherplayer.frame = 20;
+                    console.log(":same");
+                 } else {
+                        otherplayer.body.velocity.x = parseInt(cmd[4]);
+                        otherplayer.body.velocity.y = parseInt(cmd[5]);
+                        otherplayer.animations.play(cmd[6]);
+                        console.log(":diff");
+                 }
+            }
+           
+
+            connectedPlayers[cmd[1]] = { x: parseInt(cmd[2]), y: parseInt(cmd[3]), vx: parseInt(cmd[4]), vy: parseInt(cmd[5]),  anim: cmd[6]};
         }
         
         break;
