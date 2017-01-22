@@ -41,8 +41,8 @@ let playState = {
  
         game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'grass');
          
-        sound = game.add.audio('theme').play();
-        sound.loop = true;
+        //sound = game.add.audio('theme').play();
+        //sound.loop = true;
 
         animals = new Animals(game);
         for(i = 0; i < 100; i++) animals.create();
