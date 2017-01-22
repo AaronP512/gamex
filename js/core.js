@@ -8,6 +8,8 @@ var cursors, movementKeys;
 var sam; var cursors;
 var belly;
 var feet;
+var clock_hr;
+var clock_min;
 
 var otherplayer;
 
@@ -260,6 +262,14 @@ let playState = {
         clock = game.add.sprite(window.innerWidth - 150, 10, 'clock');
         clock.fixedToCamera = true;
         clock.scale.setTo(0.07, 0.07);
+
+        clock_hr = game.add.sprite(window.innerWidth - 150, 10, 'hour');
+        clock_hr.fixedToCamera = true;
+        clock_hr.scale.setTo(0.07, 0.07);
+
+        clock_min = game.add.sprite(window.innerWidth - 150, 10, 'minute');
+        clock_min.fixedToCamera = true;
+        clock_min.scale.setTo(0.07, 0.07)
 
     },  
 
