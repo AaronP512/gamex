@@ -8,6 +8,7 @@ var cursors, movementKeys;
 var sam; var cursors;
 var belly;
 var feet;
+var clock;
 var clock_hr;
 var clock_min;
 
