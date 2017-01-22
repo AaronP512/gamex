@@ -49,6 +49,14 @@ if(isset($_GET['a']) && $_GET['a'] == '3') {
                 abelly.anchor.setTo(0.5, 0.8);
         
             <?php } ?>
+
+            <?php if($i == 'pond-a') { ?>
+
+                element.animations.add('default',[0,1,2],3,true);
+                element.animations.play('default');
+                element .animations.currentAnim.speed = 10;
+            <?php } ?>
+           
             
             <?php
         }
