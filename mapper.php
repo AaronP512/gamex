@@ -43,7 +43,7 @@ if(isset($_GET['a']) && $_GET['a'] == '3') {
                 element.body.setSize(30, 2, 21, 0); //check
                 element.body.immovable = true;
                 
-                var abelly =  game.add.sprite(<?php echo $x; ?> + 30, <?php echo $y; ?> + 30, 'tree_belly');
+                var abelly =  belly.create(<?php echo $x; ?> + 30, <?php echo $y; ?> + 30, 'tree_belly');
                 console.log("creating belly as "+ abelly.z);
                 abelly.anchor.setTo(0.5, 0.8);
         
