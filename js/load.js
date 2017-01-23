@@ -27,6 +27,8 @@ let loadState = {
         game.load.spritesheet('rap', 'assets/monster2.png', 77.6, 54.6, 6 * 8);
 
         game.load.spritesheet('sams', 'assets/sam.png', 64, 64, 36); //64,64 old values
+         game.load.spritesheet('mia', 'assets/chars/mia.png', 64, 64.1, 273);
+         game.load.spritesheet('gary', 'assets/chars/gary.png', 64, 64, 273); //64,64 old values
         game.time.advancedTiming = true;
 
 

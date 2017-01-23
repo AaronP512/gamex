@@ -40,7 +40,7 @@ class Movement {
 
         if(keysBeingHeld == false) {
             sam.animations.stop();
-            sam.frame = 20; 
+            sam.frame = 26; 
         }
 
         //console.log(sam.animations.currentAnim.name);

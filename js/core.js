@@ -5,12 +5,15 @@ function rand(min, max) {
 var perf;
 var cursors, movementKeys;
 //var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS);//, '', { /*preload: preload, create: create, update: update*/ });
-var sam; var cursors;
+var sam;
+var mia;
+var cursors;
 var belly;
 var feet;
 var clock;
 var clock_hr;
 var clock_min;
+
 
 var otherplayer;
 
@@ -79,16 +82,16 @@ let playState = {
         tomatoes = game.add.group();
         tomatoes.enableBody = true;
 
-        otherplayer = game.add.sprite(800, 400, 'sams');
+        otherplayer = game.add.sprite(800, 400, 'gary');
         otherplayer.visible = false;
         otherplayer.enableBody = true;
         game.physics.arcade.enable(otherplayer);
         otherplayer.body.setSize(50, 42, 7, 15); //check
 
-        otherplayer.animations.add('up',[0,1,2,3,4,5,6,7,8],8,true);
-        otherplayer.animations.add('left',[9,10,11,12,13,14,15,16,17],8,true);
-        otherplayer.animations.add('down',[18,19,20,21,22,23,24,25,26],8,true);
-        otherplayer.animations.add('right',[27,28,29,30,31,32,33,34,35],8,true);
+        otherplayer.animations.add('up',[104,105, 106, 107, 108, 109, 110, 111, 112],8,true);
+        otherplayer.animations.add('left',[117,118,119,120,121,122,123,124,125],8,true);
+        otherplayer.animations.add('down',[130,131,132,133,134,135,136,137,138],8,true);
+        otherplayer.animations.add('right',[143,144,145,146,147,148,149,150,151],8,true);
 
 
 
@@ -101,11 +104,11 @@ let playState = {
 
 
 
-        sam = game.add.sprite(0, 0, 'sams');
-        sam.enableBody = true;
-        sam.scale.setTo(1.5,1.5);
-        game.physics.arcade.enable(sam);
-        sam.body.setSize(50, 42, 7, 15); //check
+        mia = game.add.sprite(0, 0, 'mia');
+        mia.enableBody = true;
+        mia.scale.setTo(1.5,1.5);
+        game.physics.arcade.enable(mia);
+        mia.body.setSize(50, 42, 7, 15); //check
 
 
         belly = game.add.group();
@@ -163,12 +166,16 @@ let playState = {
 
         game.camera.x = game.camera.y = 100;
        
-        sam.animations.add('up',[0,1,2,3,4,5,6,7,8],8,true);
-        sam.animations.add('left',[9,10,11,12,13,14,15,16,17],8,true);
-        sam.animations.add('down',[18,19,20,21,22,23,24,25,26],8,true);
-        sam.animations.add('right',[27,28,29,30,31,32,33,34,35],8,true);
+        mia.animations.add('up',[104,105, 106, 107, 108, 109, 110, 111, 112],8,true);
+        mia.animations.add('left',[117,118,119,120,121,122,123,124,125],8,true);
+        mia.animations.add('down',[130,131,132,133,134,135,136,137,138],8,true);
+        mia.animations.add('right',[143,144,145,146,147,148,149,150,151],8,true);
+        mia.animations.add('fight_up',[156,157,158,159,160,161],8,true);
+        mia.animations.add('fight_left',[169,170,171,172,173,174],8,true);
+        mia.animations.add('fight_down',[182,183,184,185,186,187],8,true);
+        mia.animations.add('fight_right',[195,196,197,198,199,200],8,true);
         cursors = game.input.keyboard.createCursorKeys();
-        game.camera.follow(sam);
+        game.camera.follow(mia);
 
 
 
@@ -205,7 +212,7 @@ let playState = {
         clock_min.fixedToCamera = true;
         clock_min.scale.setTo(0.07, 0.07);
         clock_min.anchor.setTo(0.5, 0.5);
-        clock_min.rotation = 1.6;
+        
 
         setInterval(function() { 
 
@@ -227,18 +234,18 @@ let playState = {
 
        
         
-        game.physics.arcade.collide(sam, feet);
+        game.physics.arcade.collide(mia, feet);
       //  game.physics.arcade.overlap(sam, feet, function() { alert("boom"); }, null, this);
 
-        game.physics.arcade.collide(sam, tomatoes);
-        game.physics.arcade.overlap(sam, tomatoes, function() { alert("spooch"); }, null, this);
+        game.physics.arcade.collide(mia, tomatoes);
+        game.physics.arcade.overlap(mia, tomatoes, function() { alert("spooch"); }, null, this);
         //game.debug.cameraInfo(game.camera, 32, 32);
 
         
         cursorSprite.x = game.input.activePointer.x + game.camera.x;
         cursorSprite.y = game.input.mousePointer.y + game.camera.y;
 
-        Movement.movementHandler(cursors, movementKeys, sam, 150);
+        Movement.movementHandler(cursors, movementKeys, mia, 150);
         game.debug.text(game.time.fps + "fps, "+ game.time.elapsed + " ms. Min: " + game.time.fpsMin + " Max:" + game.time.fpsMax , 2, 14, "#00ff00");
 
 
