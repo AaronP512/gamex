@@ -285,11 +285,18 @@ socket.on('connect',function() {
             console.log('Client has connected to the server!');
 });
 // Add a connect listener
+
+
+
 socket.on('message',function(data) {
     console.log('Received a message from the server!',data);
 
     var cmd = data.split(" ");
     switch(cmd[0]) {
+        case "ATT":
+                mia.body.velocity.x = -300;
+            
+        break;
       case "PPOS":
 
       if(players) { players.updateData(cmd); }

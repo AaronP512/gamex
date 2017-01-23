@@ -54,7 +54,12 @@ io.on('connection', function(socket){
         clients[socket.id].vy = parseInt(cmd[4]);
         clients[socket.id].anim = cmd[5];
         break;
-      
+      case "ATK":
+        for(xplayer in clients) {
+          if(!xplayer || !clients[xplayer]) continue;
+          clients[xplayer].obj.send("ATT " + cmd[1]);
+        }
+        break;  
     }
     
   });

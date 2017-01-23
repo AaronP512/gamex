@@ -4,10 +4,22 @@ class Players {
         this.players = [];
         this.playersLastXY = [];
         this.game = game;
+        this.playerGroup = game.add.group();
+        this.playerGroup.inputEnableChildren = true;
+
+        this.playerGroup.onChildInputDown.add(function(sprite) {
+           
+            if(typeof socket !== 'undefined') {
+                socket.send("ATK " + sprite.z); 
+            }
+              
+        }, this);
+
     }
 
     createPlayer(uid) {
-        let newPlayer = this.game.add.sprite(0, 0, 'gary');
+        let newPlayer = this.playerGroup.create(0, 0, 'gary');
+
         newPlayer.enableBody = true;
         this.game.physics.arcade.enable(newPlayer);
         newPlayer.body.setSize(50, 42, 7, 15); //check
@@ -18,13 +30,16 @@ class Players {
         newPlayer.animations.add('right',[27,28,29,30,31,32,33,34,35],8,true);*/
 
 
-         newPlayer.animations.add('up',[104,105, 106, 107, 108, 109, 110, 111, 112],8,true);
+        newPlayer.animations.add('up',[104,105, 106, 107, 108, 109, 110, 111, 112],8,true);
         newPlayer.animations.add('left',[117,118,119,120,121,122,123,124,125],8,true);
         newPlayer.animations.add('down',[130,131,132,133,134,135,136,137,138],8,true);
         newPlayer.animations.add('right',[143,144,145,146,147,148,149,150,151],8,true);
 
         this.players[uid] = newPlayer;
         this.playersLastXY[uid] = {x: 0, y: 0};
+
+        
+        
 
     }
 
@@ -38,7 +53,8 @@ class Players {
             this.createPlayer(uid);
         }
         
-        
+        this.players[uid].z = uid; //save uid to sprite z
+       // console.log(this.players[uid].z);
 
         this.players[uid].x = parseInt(data[2]);
         this.players[uid].y = parseInt(data[3]);
