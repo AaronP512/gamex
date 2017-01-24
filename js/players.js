@@ -1,15 +1,33 @@
 class Players {
 
-    constructor(game) {
+    constructor(game, mia) {
         this.players = [];
         this.playersLastXY = [];
         this.game = game;
+        this.mia = mia;
         this.playerGroup = game.add.group();
         this.playerGroup.inputEnableChildren = true;
+
+        this.lastFrameMovement = []; //stop anims after move, not after a fight anim
 
         this.playerGroup.onChildInputDown.add(function(sprite) {
            
             if(typeof socket !== 'undefined') {
+
+                let anim = "", dist = 0;
+                let hd = this.mia.x - sprite.x;
+                let vd = this.mia.y - sprite.y;
+
+                if(Math.abs(hd) > Math.abs(vd)) { //if horizontal dis > vertical dist
+                    anim = hd < 0 ? "fight_right": "fight_left";
+                } else {
+                    anim = vd < 0 ? "fight_down": "fight_up";
+                }
+
+                console.log("MIA: " + hd + "," + vd + "," + anim);
+                this.mia.animations.play(anim);
+
+                
                 socket.send("ATK " + sprite.z); 
             }
               
@@ -34,6 +52,13 @@ class Players {
         newPlayer.animations.add('left',[117,118,119,120,121,122,123,124,125],8,true);
         newPlayer.animations.add('down',[130,131,132,133,134,135,136,137,138],8,true);
         newPlayer.animations.add('right',[143,144,145,146,147,148,149,150,151],8,true);
+
+        newPlayer.animations.add('fight_up',[156,157,158,159,160,161],8,true);
+        newPlayer.animations.add('fight_left',[169,170,171,172,173,174],8,true);
+        newPlayer.animations.add('fight_down',[182,183,184,185,186,187],8,true);
+        newPlayer.animations.add('fight_right',[195,196,197,198,199,200],8,true);
+
+
 
         this.players[uid] = newPlayer;
         this.playersLastXY[uid] = {x: 0, y: 0};
@@ -63,19 +88,42 @@ class Players {
         this.players[uid].body.velocity.y = 0;
         
         if(this.playersLastXY[uid].x == this.players[uid].x && this.playersLastXY[uid].y == this.players[uid].y) {
-            this.players[uid].animations.stop();
-            this.players[uid].frame = 26;
-            console.log("SIFD");
+            if(this.lastFrameMovement[uid]) {
+                this.players[uid].animations.stop();
+                this.players[uid].frame = 26;
+            }
+            
+            
+            this.lastFrameMovement[uid] = false;
         } else {
             this.players[uid].body.velocity.x = parseInt(data[4]);
             this.players[uid].body.velocity.y = parseInt(data[5]);
             this.players[uid].animations.play(data[6]);
+            this.lastFrameMovement[uid] = true;
         }
             
         this.playersLastXY[uid] = {x: this.players[uid].x, y: this.players[uid].y };   
     }
 
+    processAttackOnMe(sprite) {
 
+
+        let anim = "", dist = 0;
+        let hd = this.players[sprite].x - this.mia.x;
+        let vd = this.players[sprite].y - this.mia.y;
+
+        if(Math.abs(hd) > Math.abs(vd)) { //if horizontal dis > vertical dist
+            anim = hd < 0 ? "fight_right": "fight_left";
+        } else {
+            anim = vd < 0 ? "fight_down": "fight_up";
+        }
+
+        this.players[sprite].animations.play(anim);
+        console.log("FOE: " + hd + "," + vd + "," + anim);
+        
+        mia.body.velocity.x = -300;
+
+    }
 
 
 

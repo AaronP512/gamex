@@ -35,8 +35,10 @@ var enviromentAlpha = 1;
 
 var objs;
 
-
 var players;
+
+
+var clockCycleCount = 0;
 
 
 let playState = {
@@ -96,7 +98,6 @@ let playState = {
 
 
 
-        players = new Players(game);
 
 
 
@@ -109,6 +110,8 @@ let playState = {
         mia.scale.setTo(1.5,1.5);
         game.physics.arcade.enable(mia);
         mia.body.setSize(50, 42, 7, 15); //check
+
+        
 
 
         belly = game.add.group();
@@ -188,6 +191,14 @@ let playState = {
 // setTimeout(function() { animals.followenabled = true; }, 10000);
 
 
+
+
+
+
+
+
+    //Move TO server everything below
+
         setInterval(function() { 
             if(enviromentAlpha == 1) {
                 nightfall.alpha += 0.1;
@@ -214,25 +225,17 @@ let playState = {
         clock_min.anchor.setTo(0.5, 0.5);
         
 
-        setInterval(function() { 
-
-            clock_hr.angle += 3;
-
-        }, 500);
-
-          setInterval(function() { 
-
-            clock_min.angle += 3;
-
-        }, 42); 
+        
+        setInterval(function() {  clock_hr.angle += 3; }, 500);
+        setInterval(function() {  clock_min.angle += 3; }, 42); 
+       
        
 
+        players = new Players(game, mia);
     },  
 
     update:function update() {
 
-
-       
         
         game.physics.arcade.collide(mia, feet);
       //  game.physics.arcade.overlap(sam, feet, function() { alert("boom"); }, null, this);
@@ -289,47 +292,18 @@ socket.on('connect',function() {
 
 
 socket.on('message',function(data) {
-    console.log('Received a message from the server!',data);
+    //console.log('Received a message from the server!',data);
 
     var cmd = data.split(" ");
     switch(cmd[0]) {
         case "ATT":
-                mia.body.velocity.x = -300;
+                console.log("Attacked by " + cmd[1]);
+                players.processAttackOnMe(cmd[1]);
             
         break;
       case "PPOS":
 
       if(players) { players.updateData(cmd); }
-
-       /*
-        if(otherplayer) {
-
-            
-
-            otherplayer.x = parseInt(cmd[2]);
-            otherplayer.y = parseInt(cmd[3]);
-
-           otherplayer.body.velocity.x = 0;
-           otherplayer.body.velocity.y = 0;
-           otherplayer.animations.stop();
-            otherplayer.visible = true;
-
-            if(connectedPlayers[cmd[1]]) {
-                 if(parseInt(cmd[2]) == connectedPlayers[cmd[1]].x && parseInt(cmd[3]) == connectedPlayers[cmd[1]].y) {
-                    otherplayer.frame = 20;
-                    console.log(":same");
-                 } else {
-                        otherplayer.body.velocity.x = parseInt(cmd[4]);
-                        otherplayer.body.velocity.y = parseInt(cmd[5]);
-                        otherplayer.animations.play(cmd[6]);
-                        console.log(":diff");
-                 }
-            }
-           
-
-            connectedPlayers[cmd[1]] = { x: parseInt(cmd[2]), y: parseInt(cmd[3]), vx: parseInt(cmd[4]), vy: parseInt(cmd[5]),  anim: cmd[6]};
-        }
-        */
 
 
 

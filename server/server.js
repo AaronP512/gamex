@@ -12,19 +12,19 @@ var clients = [];
 
 
 setInterval(function() {
-  //console.log("Broadcast");
-
-  var positions = [];
+    var positions = [];
   
-  for(player in clients) {
-    if(!player || !clients[player]) continue;
-    console.log("Sending to " + clients[player].obj.id);
-    for(xplayer in clients) {
-      if(!xplayer || !clients[xplayer]) continue;
-      if(clients[player].obj.id != clients[xplayer].obj.id) clients[player].obj.send("PPOS " + clients[xplayer].obj.id + " " + clients[xplayer].x + " " + clients[xplayer].y  + " " + clients[xplayer].vx + " " + clients[xplayer].vy + " " + clients[xplayer].anim);
+    for(player in clients) {
+        if(!player || !clients[player]) continue; //Null Check
+          //console.log("Sending to " + clients[player].obj.id);
+            for(xplayer in clients) {
+            if(!xplayer || !clients[xplayer] || !clients[player]) continue; //Null Check, Again (If disconnected in between, thanks node)
+            if(clients[player].obj.id != clients[xplayer].obj.id) {
+                clients[player].obj.send("PPOS " + clients[xplayer].obj.id + " " + clients[xplayer].x + " " + clients[xplayer].y  + " " + clients[xplayer].vx + " " + clients[xplayer].vy + " " + clients[xplayer].anim);
+            }
+        }
     }
-  }
-}, 36);
+}, 36); //36Hz tickrate.
 
 
 
@@ -39,7 +39,7 @@ io.on('connection', function(socket){
 
     clients.splice(clients.indexOf(socket.id), 1);
     clients[socket.id] = null;
-      console.log("removing " + socket.id);
+    console.log("removing " + socket.id);
 
   });
 
@@ -55,9 +55,14 @@ io.on('connection', function(socket){
         clients[socket.id].anim = cmd[5];
         break;
       case "ATK":
+        /*
         for(xplayer in clients) {
           if(!xplayer || !clients[xplayer]) continue;
           clients[xplayer].obj.send("ATT " + cmd[1]);
+        }
+        */
+        if(clients[cmd[1]]) {
+           clients[cmd[1]].obj.send("ATT " + socket.id);
         }
         break;  
     }
