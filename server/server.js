@@ -30,7 +30,7 @@ setInterval(function() {
 
 io.on('connection', function(socket){
   console.log('A user connected ' + socket.id);
-  clients[socket.id] = { obj: socket, x: 0, y: 0, vx:0, vy:0, anim: "" };
+  clients[socket.id] = { obj: socket, x: 0, y: 0, vx:0, vy:0, anim: "", health: 100 };
   socket.send("Welcome " + socket.id);
 
 
@@ -62,7 +62,9 @@ io.on('connection', function(socket){
         }
         */
         if(clients[cmd[1]]) {
-           clients[cmd[1]].obj.send("ATT " + socket.id);
+           clients[cmd[1]].health -= 10;
+           clients[cmd[1]].obj.send("ATT " + socket.id + " " + clients[cmd[1]].health);
+           
         }
         break;  
     }
