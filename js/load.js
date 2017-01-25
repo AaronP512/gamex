@@ -18,6 +18,10 @@ let loadState = {
         game.load.image('cave_6', 'assets/cave_6.png');
         game.load.image('cave_7', 'assets/cave_7.png');
 
+        game.load.image('blood-1', 'assets/death/blood1.png');
+        game.load.image('blood-2', 'assets/death/blood2.png');
+        game.load.image('blood-3', 'assets/death/blood3.png');
+
         game.load.image('clock', 'assets/clock.png'); 
         game.load.image('hour', 'assets/hour.png'); 
         game.load.image('minute', 'assets/minute.png');        
@@ -52,4 +56,12 @@ let loadState = {
 
         game.state.start("play");
     }
+}
+
+
+function isPlayerInRangeOfSprite(mia, sprite) {
+    let vd = Math.abs(mia.x - sprite.x);
+    let hd = Math.abs(mia.y - sprite.y);
+    if(vd < 100 && hd < 100) return true;
+    return false;
 }

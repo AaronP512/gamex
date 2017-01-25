@@ -72,8 +72,7 @@ class Animals {
 			
 			item.animations.play(anim);
 			
-
-
+			
 			//console.log(item);
     	});
 	}

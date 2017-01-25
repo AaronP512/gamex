@@ -90,7 +90,7 @@ $i = $_POST['i'];
 
 switch($a) {
     case 1:
-        mysqli_query($conn,"INSERT INTO map VALUES ($x, $y, '$i')")  or die(mysql_error());
+        mysqli_query($conn,"INSERT INTO map (x,y,i) VALUES ($x, $y, '$i')")  or die(mysql_error());
         break;
     case 0:
         mysqli_query($conn,"DELETE FROM map WHERE x = $x AND y = $y AND i = '$i';")  or die(mysql_error());

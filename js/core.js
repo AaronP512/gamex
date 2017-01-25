@@ -37,8 +37,12 @@ var objs;
 
 var players;
 
+var bloodOverlays = [];
+
 
 var clockCycleCount = 0;
+
+var myHealth = 100;
 
 
 let playState = {
@@ -134,6 +138,8 @@ let playState = {
 
         
         belly.onChildInputDown.add(function (sprite) {
+            if(!isPlayerInRangeOfSprite(mia, sprite, 20)) return alert("Out of Range brah."); 
+
             if(!treeCutTween || !treeCutTween.isRunning) {
                 treeCutTween = game.add.tween(sprite).from({angle: -3}, 55, Phaser.Easing.Bounce.InOut, true, 0000, 1, true); //to(properties, duration, ease, autoStart, delay, repeat, yoyo);
                 game.add.audio('chop').play();
@@ -230,8 +236,24 @@ let playState = {
         setInterval(function() {  clock_min.angle += 3; }, 42); 
        
        
-
+        
         players = new Players(game, mia);
+
+
+        bloodOverlays[0] = game.add.sprite(0, 0, 'blood-1');
+        bloodOverlays[1] = game.add.sprite(0, 0, 'blood-2');
+        bloodOverlays[2] = game.add.sprite(0, 0, 'blood-3');
+
+        bloodOverlays[0].fixedToCamera = true;
+        bloodOverlays[1].fixedToCamera = true;
+        bloodOverlays[2].fixedToCamera = true;
+
+        bloodOverlays[0].visible = false;
+        bloodOverlays[1].visible = false;
+        bloodOverlays[2].visible = false;
+
+
+        
     },  
 
     update:function update() {
@@ -298,9 +320,21 @@ socket.on('message',function(data) {
     switch(cmd[0]) {
         case "ATT":
                 console.log("Attacked by " + cmd[1]);
+                myHealth = parseInt(cmd[2]);
                 players.processAttackOnMe(cmd[1]);
+                console.log("My Current Health = " + myHealth);   
+
+                if(myHealth < 30) {
+                    bloodOverlays[0].visible = true;
+                }
+                if(myHealth < 20) {
+                    bloodOverlays[1].visible = true;
+                }
+                if(myHealth < 10) {
+                    bloodOverlays[2].visible = true;
+                }
             
-        break;
+                break;
       case "PPOS":
 
       if(players) { players.updateData(cmd); }
