@@ -14,8 +14,18 @@ var clients = [];
 
 var animals = [];
 
-animals.push({ id: 0, type: 'kitty', x: 0, y: 0, d: 0});
-animals.push({ id: 1, type: 'godzilla', x: 10, y: 0, d: 0});
+(function () {
+
+	var animallist = ['kitty', 'godzilla'];
+	for(var i = 0; i < 20; i++) {
+		animals.push({ id: i, type: animallist[rand(0,1)], x: 0, y: 0, d: 0});		
+		console.log("Creating animal " + i + " as " + animals[i].type);
+	}
+
+	
+})();
+
+
 
 var minute = 06*60;
 
@@ -47,10 +57,10 @@ setInterval(function() {
 
 	for(var i = 0; i < animals.length; i++) {
 		switch(animals[i].d) {
-			case 0: animals[i].x--; break;
-			case 1: animals[i].y--; break;
-			case 2: animals[i].x++; break;
-			case 3: animals[i].y++; break;
+			case 0: animals[i].x-= 10; break;
+			case 1: animals[i].y-= 10; break;
+			case 2: animals[i].x+= 10; break;
+			case 3: animals[i].y+= 10; break;
 		}
 	}
 
@@ -62,17 +72,17 @@ setInterval(function() {
 
 		for(var i = 0; i < animals.length; i++) {
 			animals[i].d = rand(0, 3);
+			io.sockets.emit("animal_update", animals[i]);
 		}	
 
 
-		io.sockets.emit("animal_update", animals[0]);
-		io.sockets.emit("animal_update", animals[1]);
+		
 		lastanimalupdate = new Date();
 
 		
 	}
     
-}, 100);
+}, 170);
 
 
 /*
