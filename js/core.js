@@ -155,7 +155,7 @@ let playState = {
 
 
 
-        loadobjects(game);
+        
 
 
 
@@ -171,28 +171,27 @@ let playState = {
         mia.animations.add('fight_left',[169,170,171,172,173,174],8,true);
         mia.animations.add('fight_down',[182,183,184,185,186,187],8,true);
         mia.animations.add('fight_right',[195,196,197,198,199,200],8,true);
-        cursors = game.input.keyboard.createCursorKeys();
+
         game.camera.follow(mia);
 
 
 
-        
-
-        
-        //nightfall = game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'night');
-        //nightfall.alpha = 0.1;
 
 
-
-
+        /*
+        *   Light Effects
+        *
+        *
+        */
 
 
         this.shadowTexture = this.game.add.bitmapData(this.game.width, this.game.height);    // Create an object that will use the bitmap as a texture   
         this.lightSprite = this.game.add.image(this.game.camera.x, this.game.camera.y, this.shadowTexture);    // Set the blend mode to MULTIPLY. This will darken the colors of  everything below this sprite.    
         this.lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
 
+        this.objectsThatRequireLight = [];
 
-
+        loadobjects(game);
 
 
 
@@ -208,9 +207,6 @@ let playState = {
 
 
 
-
-
-    //Move TO server everything below
 
         
 
@@ -291,7 +287,7 @@ let playState = {
         game.world.scale.set(worldScale);
        
         animals.move();
-        window.a = animals;
+        window.a = animals; //so I can run commands via terminal, remove this later not reqd
         //animals.follow(sam);
        
 
@@ -305,15 +301,32 @@ let playState = {
             heroX = (mia.x + 96/2) - this.game.camera.x,        
             heroY = (mia.y + 96/2) - this.game.camera.y;       // Draw circle of light with a soft edge    
             
-            
             var gradient =   this.shadowTexture.context.createRadialGradient(            heroX, heroY, 100 * 0.75,            heroX, heroY, radius);   
-             gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');    
-             gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');    
-             this.shadowTexture.context.beginPath();    
-             this.shadowTexture.context.fillStyle = gradient;    
-             this.shadowTexture.context.arc(heroX, heroY, radius, 0, Math.PI*2, false);    
-             this.shadowTexture.context.fill();    // This just tells the engine it should update the texture cache    
-             this.shadowTexture.dirty = true;
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');    
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');    
+            this.shadowTexture.context.beginPath();    
+            this.shadowTexture.context.fillStyle = gradient;    
+            this.shadowTexture.context.arc(heroX, heroY, radius, 0, Math.PI*2, false);    
+            this.shadowTexture.context.fill();    // This just tells the engine it should update the texture cache    
+            this.shadowTexture.dirty = true;
+
+            let thiscontext = this;
+
+            this.objectsThatRequireLight.forEach(function(data) {
+                var objectX = data.x - thiscontext.game.camera.x
+                var objectY = data.y - thiscontext.game.camera.y;   
+                var gradient =   thiscontext.shadowTexture.context.createRadialGradient(objectX, objectY, 100 * 0.75, objectX, objectY, radius);   
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');    
+                gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');    
+                thiscontext.shadowTexture.context.beginPath();    
+                thiscontext.shadowTexture.context.fillStyle = gradient;    
+                thiscontext.shadowTexture.context.arc(objectX, objectY, radius, 0, Math.PI*2, false);    
+                thiscontext.shadowTexture.context.fill();    // This just tells the engine it should update the texture cache    
+                thiscontext.shadowTexture.dirty = true;
+
+            });
+
+
     },
 
     updateGameClock: function (time) {

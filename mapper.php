@@ -62,6 +62,7 @@ if(isset($_GET['a']) && $_GET['a'] == '3') {
                 element.animations.add('default',[0,1,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17],18,true);
                 element.animations.play('default');
                 element .animations.currentAnim.speed = 10;
+                playState.objectsThatRequireLight.push(element);
             <?php } ?>
 
             
