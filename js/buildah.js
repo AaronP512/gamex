@@ -116,7 +116,7 @@ let playState = {
         placeableObjects.push(game.add.sprite(0, 0, 'flower3'));
         placeableObjects.push(game.add.sprite(0, 0, 'flower4'));
         placeableObjects.push(game.add.sprite(0, 0, 'flower5'));
-
+        placeableObjects.push(game.add.sprite(0, 0, 'fire-a'));    
 
 
         placedGroup = game.add.group();

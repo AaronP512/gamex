@@ -10,9 +10,8 @@ var mia;
 var cursors;
 var belly;
 var feet;
-var clock;
-var clock_hr;
-var clock_min;
+
+
 
 
 var otherplayer;
@@ -27,10 +26,7 @@ var animals;
 
 var connectedPlayers = [];
 
-var worldScale = 1, nightfall;
-
-var enviromentAlpha = 1;
-
+var worldScale = 1;
 
 
 var objs;
@@ -65,7 +61,7 @@ let playState = {
         //sound = game.add.audio('theme').play();
         //sound.loop = true;
 
-        //animals = new Animals(game);
+        animals = new Animals(game);
         //for(i = 0; i < 100; i++) animals.create();
 
         caves = game.add.group();
@@ -146,15 +142,7 @@ let playState = {
 
 
                 if(treeClickCounter++ % 5 == 0) {
-                    /* LOL
-                    emitter = game.add.emitter(0, 0, 0);
-                    emitter.makeParticles('smoke');
-                    emitter.setScale(0.4, 2, 0.4, 2, 6000, Phaser.Easing.Quintic.Out);
-                    emitter.gravity = -100;
-                    emitter.emitX = sprite.position.x;
-                    emitter.emitY = sprite.position.y - 50;
-                    emitter.start(true, 2000, null, 10);
-                    */
+   
                     game.add.tween(sprite.scale).to({x: 0.5, y: 0.5}, 2000, Phaser.Easing.Linear.Out, true, 0000, 1, false);
                     game.add.tween(sprite).to({alpha: 0}, 1000, Phaser.Easing.Linear.Out, true, 0000, 1, false); //to(properties, duration, ease, autoStart, delay, repeat, yoyo);
                     game.add.audio('chopdone').play();
@@ -188,12 +176,31 @@ let playState = {
 
 
 
-        cursorSprite = game.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'pointers');
-        //cursorSprite.visible = false;
         
-       nightfall = game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'night');
-        nightfall.alpha = 0.1;
-        new HUD(game);
+
+        
+        //nightfall = game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'night');
+        //nightfall.alpha = 0.1;
+
+
+
+
+
+
+        this.shadowTexture = this.game.add.bitmapData(this.game.width, this.game.height);    // Create an object that will use the bitmap as a texture   
+        this.lightSprite = this.game.add.image(this.game.camera.x, this.game.camera.y, this.shadowTexture);    // Set the blend mode to MULTIPLY. This will darken the colors of  everything below this sprite.    
+        this.lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
+
+
+
+
+
+
+
+
+
+
+        
 // setTimeout(function() { animals.followenabled = true; }, 10000);
 
 
@@ -205,37 +212,26 @@ let playState = {
 
     //Move TO server everything below
 
-        setInterval(function() { 
-            if(enviromentAlpha == 1) {
-                nightfall.alpha += 0.1;
-                if(nightfall.alpha >= 0.95) enviromentAlpha = 0;
-            } else {
-                nightfall.alpha -= 0.1;
-                if(nightfall.alpha <= 0.05) enviromentAlpha = 1;
-            }
-        }, 6000);
-
-        clock = game.add.sprite(window.innerWidth - 150, 10, 'clock');
-        clock.fixedToCamera = true;
-        clock.scale.setTo(0.07, 0.07);
-
-        clock_hr = game.add.sprite(window.innerWidth - 95, 65, 'hour');
-        clock_hr.fixedToCamera = true;
-        clock_hr.scale.setTo(0.07, 0.07);
-        clock_hr.anchor.setTo(0.5, 0.5);
-        clock_hr.rotation = 1.6;
-
-        clock_min = game.add.sprite(window.innerWidth - 95, 65 , 'minute');
-        clock_min.fixedToCamera = true;
-        clock_min.scale.setTo(0.07, 0.07);
-        clock_min.anchor.setTo(0.5, 0.5);
         
 
-        
-        setInterval(function() {  clock_hr.angle += 3; }, 500);
-        setInterval(function() {  clock_min.angle += 3; }, 42); 
-       
-       
+        this.clock = game.add.sprite(window.innerWidth - 150, 10, 'clock');
+        this.clock.fixedToCamera = true;
+        this.clock.scale.setTo(0.07, 0.07);
+
+        this.clock_hr = game.add.sprite(window.innerWidth - 95, 65, 'hour');
+        this.clock_hr.fixedToCamera = true;
+        this.clock_hr.scale.setTo(0.07, 0.07);
+        this.clock_hr.anchor.setTo(0.5, 0.5);
+        this.clock_hr.angle = 0;
+        //this.clock_hr.rotation = 1.6;
+
+        this.clock_min = game.add.sprite(window.innerWidth - 95, 65 , 'minute');
+        this.clock_min.fixedToCamera = true;
+        this.clock_min.scale.setTo(0.07, 0.07);
+        this.clock_min.anchor.setTo(0.5, 0.5);
+        this.clock_min.angle = 0;
+
+
         
         players = new Players(game, mia);
 
@@ -253,12 +249,21 @@ let playState = {
         bloodOverlays[2].visible = false;
 
 
+        //HUD over all other layers
+        new HUD(game);
+
+        //Mouse over all other layers
+        cursorSprite = game.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'pointers');
         
+        this.preloadDone = true;
     },  
 
     update:function update() {
 
-        
+        this.lightSprite.reset(this.game.camera.x, this.game.camera.y);    
+        this.updateShadowTexture();
+          
+
         game.physics.arcade.collide(mia, feet);
       //  game.physics.arcade.overlap(sam, feet, function() { alert("boom"); }, null, this);
 
@@ -285,11 +290,50 @@ let playState = {
         }
         game.world.scale.set(worldScale);
        
-        //animals.move();
+        animals.move();
+        window.a = animals;
         //animals.follow(sam);
        
 
         
+
+    },
+    updateShadowTexture: function(){    // Draw shadow   
+            this.shadowTexture.context.fillStyle = 'rgb(' + this.rgb + ')';   
+            this.shadowTexture.context.fillRect(0, 0, this.game.width, this.game.height);   
+            var radius = 100 + this.game.rnd.integerInRange(1,10),        
+            heroX = (mia.x + 96/2) - this.game.camera.x,        
+            heroY = (mia.y + 96/2) - this.game.camera.y;       // Draw circle of light with a soft edge    
+            
+            
+            var gradient =   this.shadowTexture.context.createRadialGradient(            heroX, heroY, 100 * 0.75,            heroX, heroY, radius);   
+             gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');    
+             gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');    
+             this.shadowTexture.context.beginPath();    
+             this.shadowTexture.context.fillStyle = gradient;    
+             this.shadowTexture.context.arc(heroX, heroY, radius, 0, Math.PI*2, false);    
+             this.shadowTexture.context.fill();    // This just tells the engine it should update the texture cache    
+             this.shadowTexture.dirty = true;
+    },
+
+    updateGameClock: function (time) {
+        if(!this.preloadDone) return;
+
+        let minute_of_day = time;
+        let minute_hand_rotation = ((minute_of_day % 60) / 60 ) * 360;
+        let hour_hand_rotation = ((((minute_of_day % 3600) / 60) % 12) / 12) * 360;
+
+        this.clock_min.angle = minute_hand_rotation;
+        this.clock_hr.angle = hour_hand_rotation;
+
+        this.rgb = '10, 10, 10';
+        if(time < 4*60) this.rgb = '10, 10, 10';
+        if(time >= 4*60 && time < 6*60) this.rgb = '110, 110, 110';
+        if(time >= 6*60 && time < 9*60) this.rgb = '150, 150, 150'
+        if(time >= 9*60 && time < 16*60) this.rgb = '255, 255, 255'
+        if(time >= 16*60 && time < 18*60) this.rgb = '190, 150, 150'
+        if(time >= 18*60 && time < 20*60) this.rgb = '110, 110, 110'
+        if(time >= 20*60) this.rgb = '10, 10, 10';
 
     }
 };
@@ -350,6 +394,47 @@ socket.on('message',function(data) {
 socket.on('disconnect',function() {
     console.log('The client has disconnected!');
 });
+
+
+socket.on('time',function(time) {
+    console.log("TIME: " + time);
+    playState.updateGameClock(time);
+        
+});
+
+
+
+socket.on('attack_ack',function(data) {
+    console.log("Attacked by " + data.by);
+    myHealth = parseInt(data.hp);
+    players.processAttackOnMe(data.by);
+    console.log("My Current Health = " + myHealth);   
+
+    if(myHealth < 30) {
+        bloodOverlays[0].visible = true;
+    }
+    if(myHealth < 20) {
+        bloodOverlays[1].visible = true;
+    }
+    if(myHealth < 10) {
+        bloodOverlays[2].visible = true;
+    }
+});
+
+
+
+
+/* animals */
+
+socket.on('animal_create', function(data) {
+    if(!playState.preloadDone) return;
+    animals.create(data.type, data.id);
+});
+socket.on('animal_update', function(data) {
+    if(!playState.preloadDone) return;
+    animals.update(data);
+});
+
 
 // Sends a message to the server via sockets
 function sendMessageToServer(message) {
