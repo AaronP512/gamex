@@ -9,7 +9,8 @@ let loadState = {
         game.load.spritesheet('pond-a', 'assets/pond-a_lay_sp.png', 813/3, 124, 3);
         game.load.image('pond-b', 'assets/pond-b_lay.png');
         game.load.image('night', 'assets/night2.png');
-        
+        game.load.spritesheet('fire-a', 'assets/fire/fire.png', 1245/5, 1192/4, 18);
+
         //caves
         game.load.image('cave_e', 'assets/cave_e.png');
         game.load.image('cave_1', 'assets/cave_1.png');
@@ -41,7 +42,7 @@ let loadState = {
         game.load.image('minute', 'assets/minute.png');        
 
         /* Animals */
-        game.load.spritesheet('catsx', 'assets/cats.png', 48, 48, 12 * 9);
+        game.load.spritesheet('cats', 'assets/cats.png', 48, 48, 12 * 9);
         game.load.spritesheet('rap', 'assets/monster2.png', 77.6, 54.6, 6 * 8);
 
         // characters

@@ -8,9 +8,11 @@
         <script src="js/load.js"></script>
 
 
-        <script src="http://192.168.43.204:3000/socket.io/socket.io.js"></script>
-        <script>var socket = io("http://192.168.43.204:3000");</script>
-        <script src="http://192.168.43.204/gamex/mapper.php?a=3"></script>
+
+        <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+        <script>var socket = io("http://localhost:3000");</script>
+        <script src="http://localhost/gamex/mapper.php?a=3"></script>
+
 
 
         <script src="js/players.js"></script>
@@ -19,18 +21,14 @@
         <script src="js/movement.js"></script>
 
         <script src="js/animals.js"></script>
-        <script> var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS); </script>
+        <script> var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO); </script>
         <script src="js/test.js"></script>
         <script src="js/core.js"></script>
         
         
 
         <script>
-        // Create SocketIO instance, connect 
-        //var socket = io("http://localhost:3000");
 
-
-        // Add a connect listener
         
         </script>
 
@@ -40,3 +38,4 @@
 
     </body>
 </html>
+

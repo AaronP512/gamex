@@ -28,7 +28,8 @@ class Players {
                 this.mia.animations.play(anim);
 
                 
-                socket.send("ATK " + sprite.z); 
+                //socket.send("ATK " + sprite.z); 
+                socket.emit("attack_player", sprite.z); 
             }
               
         }, this);
