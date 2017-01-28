@@ -9,6 +9,11 @@ class Animals {
 
 		this.animalsRequestedFromServer = false;
 
+		setTimeout(function() { 
+			console.log("Requesting animals...");
+			socket.emit("request_animals", { data: 0 });
+		}, 2000);
+
 	}
 
 	move() {
@@ -48,10 +53,8 @@ class Animals {
 
 	update(animaldata) {
 
-		if(!this.animalsRequestedFromServer) {
-			socket.emit("request_animals", { data: 0 });
-			return;
-		}
+		if(!this.animalsRequestedFromServer) return;
+
 		this.kittyList[animaldata.id].obj.position.x = animaldata.x;
 		this.kittyList[animaldata.id].obj.position.y = animaldata.y;
 		this.kittyList[animaldata.id].direction = animaldata.d;
@@ -110,7 +113,7 @@ class Animals {
 	create(animal, id) {
 
 		this.animalsRequestedFromServer = true;
-
+		console.log("Creating new animal " + id + " as " + animal);
 		let kitty = null;
 
 		switch(animal) {
