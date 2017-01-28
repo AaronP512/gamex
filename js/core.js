@@ -38,24 +38,27 @@ var bloodOverlays = [];
 
 var clockCycleCount = 0;
 
-var myHealth = 100;
+
 
 
 let playState = {
     create: function create() {
+
         game.add.plugin(Phaser.Plugin.Debug);
         this.game.canvas.style.cursor = "none";
-
         game.physics.startSystem(Phaser.Physics.ARCADE);
-
-
         game.stage.backgroundColor = GameSettings.backgroundColor;
         game.world.setBounds(-GameSettings.bounds/2, -GameSettings.bounds/2, GameSettings.bounds, GameSettings.bounds);
 
         cursors = game.input.keyboard.createCursorKeys();
         movementKeys = Movement.getMovementKeys();
         
- 
+        this.playerStats = {
+            myHealth: 100,
+            mySanity: 100,
+            myHunger: 100
+        };
+        
         game.add.tileSprite(-GameSettings.bounds, -GameSettings.bounds, GameSettings.bounds * 2, GameSettings.bounds * 2, 'grass');
          
         //sound = game.add.audio('theme').play();
@@ -246,7 +249,7 @@ let playState = {
 
 
         //HUD over all other layers
-        new HUD(game);
+        this.hud = new HUD(game, this.playerStats);
 
         //Mouse over all other layers
         cursorSprite = game.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'pointers');
@@ -363,6 +366,12 @@ game.state.add('test', testState);
 game.state.start("boot");
 
 
+
+
+
+
+
+
 socket.on('connect',function() {
             console.log('Client has connected to the server!');
 });
@@ -377,17 +386,21 @@ socket.on('message',function(data) {
     switch(cmd[0]) {
         case "ATT":
                 console.log("Attacked by " + cmd[1]);
-                myHealth = parseInt(cmd[2]);
+                playState.playerStats.myHealth = parseInt(cmd[2]);
                 players.processAttackOnMe(cmd[1]);
-                console.log("My Current Health = " + myHealth);   
+                console.log("My Current Health = " + playState.playerStats.myHealth); 
 
-                if(myHealth < 30) {
+                playState.hud.updateHealth(playState.playerStats.myHealth);  
+
+                console.log("cool");
+
+                if(playState.playerStats.myHealth < 30) {
                     bloodOverlays[0].visible = true;
                 }
-                if(myHealth < 20) {
+                if(playState.playerStats.myHealth < 20) {
                     bloodOverlays[1].visible = true;
                 }
-                if(myHealth < 10) {
+                if(playState.playerStats.myHealth < 10) {
                     bloodOverlays[2].visible = true;
                 }
             
@@ -419,17 +432,20 @@ socket.on('time',function(time) {
 
 socket.on('attack_ack',function(data) {
     console.log("Attacked by " + data.by);
-    myHealth = parseInt(data.hp);
+    playState.playerStats.myHealth = parseInt(data.hp);
     players.processAttackOnMe(data.by);
-    console.log("My Current Health = " + myHealth);   
+    console.log("My Current Health = " + playState.playerStats.myHealth);   
 
-    if(myHealth < 30) {
+    playState.hud.updateHealth(playState.playerStats.myHealth);
+
+
+    if(playState.playerStats.myHealth < 30) {
         bloodOverlays[0].visible = true;
     }
-    if(myHealth < 20) {
+    if(playState.playerStats.myHealth < 20) {
         bloodOverlays[1].visible = true;
     }
-    if(myHealth < 10) {
+    if(playState.playerStats.myHealth < 10) {
         bloodOverlays[2].visible = true;
     }
 });

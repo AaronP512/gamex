@@ -33,8 +33,6 @@ let loadState = {
         game.load.image('house-3', 'assets/homes/house4.png');
         game.load.image('house', 'assets/House.png');
 
-        //fire
-         game.load.spritesheet('bornfire', 'assets/fore/fire.png', 249, 298, 18);
 
         //watch
         game.load.image('clock', 'assets/clock.png'); 

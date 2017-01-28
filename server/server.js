@@ -133,7 +133,6 @@ io.on('connection', function(socket){
            //clients[playerid.obj.send("ATT " + socket.id + " " + clients[cmd[1]].health);
 		   clients[playerid].obj.emit("attack_ack", {by: socket.id, hp: clients[playerid].health });
         }
-	  console.log(pos);
   });
 
   //unused.
