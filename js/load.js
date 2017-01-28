@@ -32,6 +32,9 @@ let loadState = {
         game.load.image('house-3', 'assets/homes/house4.png');
         game.load.image('house', 'assets/House.png');
 
+        //fire
+         game.load.spritesheet('bornfire', 'assets/fore/fire.png', 249, 298, 18);
+
         //watch
         game.load.image('clock', 'assets/clock.png'); 
         game.load.image('hour', 'assets/hour.png'); 
@@ -84,9 +87,9 @@ let loadState = {
 }
 
 
-function isPlayerInRangeOfSprite(mia, sprite) {
-    let vd = Math.abs(mia.x - sprite.x);
-    let hd = Math.abs(mia.y - sprite.y);
-    if(vd < 100 && hd < 100) return true;
-    return false;
+    function isPlayerInRangeOfSprite(mia, sprite) {
+        let vd = Math.abs(mia.x - sprite.x);
+        let hd = Math.abs(mia.y - sprite.y);
+        if(vd < 100 && hd < 100) return true;
+        return false;
 }
