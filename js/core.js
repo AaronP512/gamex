@@ -137,7 +137,7 @@ let playState = {
 
         
         belly.onChildInputDown.add(function (sprite) {
-            if(!isPlayerInRangeOfSprite(mia, sprite, 20)) return alert("Out of Range brah."); 
+            if(!isPlayerInRangeOfSprite(mia, sprite, 20)) return game.add.audio('buzz').play(); //alert("Out of Range brah."); 
 
             if(!treeCutTween || !treeCutTween.isRunning) {
                 treeCutTween = game.add.tween(sprite).from({angle: -3}, 55, Phaser.Easing.Bounce.InOut, true, 0000, 1, true); //to(properties, duration, ease, autoStart, delay, repeat, yoyo);

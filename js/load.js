@@ -61,6 +61,11 @@ let loadState = {
         game.load.audio('chop', ['assets/sfx/chop.mp3', '']);
         game.load.audio('chopdone', ['assets/sfx/chopdone.mp3', '']);
         game.load.audio('theme', ['assets/sfx/theme.mp3', '']);
+        game.load.audio('buzz', ['assets/sfx/longbuzz_wrong.wav', '']);
+
+
+
+
 
         /* HUD */
         game.load.image('health', 'assets/hud/health.png');

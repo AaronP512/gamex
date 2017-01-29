@@ -3,6 +3,7 @@
 $conn = mysqli_connect("localhost", "root", "", "map") or die(mysql_error());
 //mysqli_select_db("map") or die(mysql_error());
 
+/*
 if(isset($_POST['a']) && $_POST['a'] == '2') {
     $array = array();
     $r = mysqli_query($conn, "SELECT * FROM map")  or die(mysql_error());
@@ -14,6 +15,7 @@ if(isset($_POST['a']) && $_POST['a'] == '2') {
     echo json_encode($array);
     die;
 }
+*/
 
 
 if(isset($_GET['a']) && $_GET['a'] == '3') {
