@@ -251,6 +251,9 @@ let playState = {
         //HUD over all other layers
         this.hud = new HUD(game, this.playerStats);
 
+        //Inventory above others
+        this.inventory = new Inventory(game);
+
         //Mouse over all other layers
         cursorSprite = game.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'pointers');
         

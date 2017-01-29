@@ -77,6 +77,22 @@ let loadState = {
         game.load.image('flower4', 'assets/flower4.png');
         game.load.image('flower5', 'assets/flower5.png');
 
+        //inventory
+        game.load.image('1','assets/inventory/axe.png');
+		game.load.image('2','assets/inventory/blaster.png');
+		game.load.image('3','assets/inventory/gold.png');
+		game.load.image('4','assets/inventory/hay1.jpg');
+		game.load.image('5','assets/inventory/images.jpg');
+		game.load.image('6','assets/inventory/meat.jpg');
+		game.load.image('7','assets/inventory/sil2.jpg');
+		game.load.image('8','assets/inventory/Tomato.png');
+		game.load.image('9','assets/inventory/torch.png');
+		game.load.image('10','assets/inventory/stone.png');
+		game.load.image('11','assets/inventory/lighter.jpg');
+		game.load.image('12','assets/inventory/Sword.png');		
+		game.load.image('bg','assets/inventory/bg.jpg');
+		game.load.image('inbg','assets/inventory/background.jpg');
+
 
     },
     create: function() {
