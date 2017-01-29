@@ -331,7 +331,7 @@ let playState = {
                 thiscontext.shadowTexture.context.fill();    // This just tells the engine it should update the texture cache    
                 thiscontext.shadowTexture.dirty = true;
 
-            });
+            }); 
 
 
     },
