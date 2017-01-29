@@ -7,6 +7,7 @@ class Players {
         this.mia = mia;
         this.playerGroup = game.add.group();
         this.playerGroup.inputEnableChildren = true;
+        this.swordSFX = game.add.audio('sword-a');
 
         this.lastFrameMovement = []; //stop anims after move, not after a fight anim
 
@@ -26,6 +27,7 @@ class Players {
 
                 console.log("MIA: " + hd + "," + vd + "," + anim);
                 this.mia.animations.play(anim);
+                this.swordSFX.play();
 
                 
                 //socket.send("ATK " + sprite.z); 

@@ -9,7 +9,8 @@ let loadState = {
         game.load.spritesheet('pond-a', 'assets/pond-a_lay_sp.png', 813/3, 124, 3);
         game.load.image('pond-b', 'assets/pond-b_lay.png');
         game.load.image('night', 'assets/night2.png');
-        game.load.spritesheet('fire-a', 'assets/fire/fire.png', 1245/5, 1192/4, 18);
+        //game.load.spritesheet('fire-a', 'assets/fire/fire.png', 1245/5, 1192/4, 18);
+        game.load.spritesheet('fire-a', 'assets/fire/firex.png', 187/5, 179/4, 18);
 
         //caves
         game.load.image('cave_e', 'assets/cave_e.png');
@@ -62,7 +63,7 @@ let loadState = {
         game.load.audio('chopdone', ['assets/sfx/chopdone.mp3', '']);
         game.load.audio('theme', ['assets/sfx/theme.mp3', '']);
         game.load.audio('buzz', ['assets/sfx/longbuzz_wrong.wav', '']);
-
+        game.load.audio('sword-a', ['assets/sfx/sword_high_pitch.wav', '']);
 
 
 

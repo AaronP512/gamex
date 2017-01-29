@@ -1,10 +1,22 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var path = require('path');
 
 app.get('/', function(req, res){
-  res.sendfile('../index.html');
+  res.sendFile(path.resolve('../index.html'));
 });
+
+app.get('/:file', function(req, res){
+  res.sendFile(path.resolve('../' + req.params.file));
+});
+
+
+app.get('/:dir/:file', function(req, res){
+  res.sendFile(path.resolve('../' + req.params.dir + '/' + req.params.file));
+});
+
+
 
 function rand(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;

@@ -39,11 +39,12 @@ var bloodOverlays = [];
 var clockCycleCount = 0;
 
 
-
+let playStateContext = null;
 
 let playState = {
     create: function create() {
-
+        playStateContext = this;
+        
         game.add.plugin(Phaser.Plugin.Debug);
         this.game.canvas.style.cursor = "none";
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -79,7 +80,7 @@ let playState = {
         }, this);
 
 
-
+        this.accessDeniedSFX = game.add.audio('buzz');
 
         feet = game.add.group();
         feet.enableBody = true;
@@ -137,7 +138,7 @@ let playState = {
 
         
         belly.onChildInputDown.add(function (sprite) {
-            if(!isPlayerInRangeOfSprite(mia, sprite, 20)) return game.add.audio('buzz').play(); //alert("Out of Range brah."); 
+            if(!isPlayerInRangeOfSprite(mia, sprite, 20)) return playStateContext.accessDeniedSFX.play(); //alert("Out of Range brah."); 
 
             if(!treeCutTween || !treeCutTween.isRunning) {
                 treeCutTween = game.add.tween(sprite).from({angle: -3}, 55, Phaser.Easing.Bounce.InOut, true, 0000, 1, true); //to(properties, duration, ease, autoStart, delay, repeat, yoyo);
@@ -319,8 +320,8 @@ let playState = {
             let thiscontext = this;
 
             this.objectsThatRequireLight.forEach(function(data) {
-                var objectX = data.x - thiscontext.game.camera.x
-                var objectY = data.y - thiscontext.game.camera.y;   
+                var objectX = data.x - thiscontext.game.camera.x + data.width/2;
+                var objectY = data.y - thiscontext.game.camera.y + data.height/2;   
                 var gradient =   thiscontext.shadowTexture.context.createRadialGradient(objectX, objectY, 100 * 0.75, objectX, objectY, radius);   
                 gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');    
                 gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');    
