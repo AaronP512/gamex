@@ -151,6 +151,9 @@ let playState = {
                     game.add.tween(sprite).to({alpha: 0}, 1000, Phaser.Easing.Linear.Out, true, 0000, 1, false); //to(properties, duration, ease, autoStart, delay, repeat, yoyo);
                     game.add.audio('chopdone').play();
                     setTimeout(function() { sprite.visible = false; }, 1000);
+
+                    socket.emit('cut_tree', { treeid: sprite.z });
+
                 }
                 
             }
@@ -431,6 +434,24 @@ socket.on('time',function(time) {
     playState.updateGameClock(time);
         
 });
+
+
+socket.on('trees_cut_down', function(trees) {
+
+    if(!playState.preloadDone) return;
+    console.log(trees);
+   
+    belly.forEach(function(item) {
+        //console.log("Comparing " + item.z);
+        if(trees.indexOf(item.z) != -1) {
+            //console.log("Disabling " + item.z);
+            item.visible = false;
+        }
+    }); 
+
+});
+
+
 
 
 

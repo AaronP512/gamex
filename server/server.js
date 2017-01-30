@@ -24,6 +24,9 @@ function rand(min, max) {
 
 var clients = [];
 
+
+var treesCutDown = [2,3];
+
 var animals = [];
 
 (function () {
@@ -61,7 +64,13 @@ setInterval(function() {
     io.sockets.emit('time', ++minute);
     minute += 1 ;
     if(minute > 24*60) minute = 0;
+
 }, 500);
+
+
+setInterval(function() {
+    io.sockets.emit('trees_cut_down', treesCutDown);
+}, 2000);
 
 
 var lastanimalupdate = 0;
@@ -126,7 +135,9 @@ io.on('connection', function(socket){
 
   });
 
-
+  socket.on('cut_tree', function(data) { 
+      treesCutDown.push(data.treeid);
+  });
   
 
   socket.on('client_pos', function(pos){
