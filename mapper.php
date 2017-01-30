@@ -41,9 +41,13 @@ if(isset($_GET['a']) && $_GET['a'] == '3') {
                 element.body.immovable = true;
                 console.log("creating " + element.z + ", "+ element.key);
 
+
+                element.animations.add('rip',[3,4,5],3,true);
                 element.animations.add('default',[0,1,2],3,true);
                 element.animations.play('default');
-                element .animations.currentAnim.speed = 10;
+                element.animations.currentAnim.speed = 10;
+
+
             <?php } 
             else if($i == 'fire-a') { ?>
 

@@ -136,6 +136,15 @@ let playState = {
            // cursorSprite.body.setSize(45,0,45,0);
             }, this);
 
+         ponds.onChildInputDown.add(function(sprite){
+            sprite.animations.play("rip");
+            sprite.animations.currentAnim.speed = 10;
+            setTimeout(function(){
+               sprite.animations.play("default");
+            },1000);
+            console.log("ponf");
+            }, this);
+
 
         belly = game.add.group();
         belly.inputEnableChildren = true;
