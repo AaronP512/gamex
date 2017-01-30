@@ -51,13 +51,16 @@ class Inventory {
 
 	acquireItemFromLocation(x, y, item) {
 
-        this.inventoryItem[item - 1].x = x - this.game.camera.x;
-		this.inventoryItem[item - 1].y = y - this.game.camera.y;
+        this.inventoryItem[item - 1].x = x;// - this.game.camera.x;
+		this.inventoryItem[item - 1].y = y;// - this.game.camera.y;
 		this.inventoryItem[item - 1].visible = true;
 		this.inventoryItem[item - 1].fixedToCamera = false;
 
-		this.game.add.tween(this.inventoryItem[item - 1]).to({x: 2, y: 2 }, 5000);
-    }
+		this.game.add.tween(this.inventoryItem[item - 1].scale).to({x: 3, y: 3}, 1000, Phaser.Easing.Linear.Out, true, 0, 1, false);
+		this.game.add.tween(this.inventoryItem[item - 1]).to({x: this.game.width/2, y: 1080}, 2000, Phaser.Easing.Linear.Out, true, 0, 1, false);
+   
+		//this.inventoryItem[item - 1].fixedToCamera = false;
+	}
     
 
 }
