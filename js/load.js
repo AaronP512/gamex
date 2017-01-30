@@ -89,7 +89,7 @@ let loadState = {
 		game.load.image('3','assets/inventory/gold.png');
 		game.load.image('4','assets/inventory/hay1.jpg');
 		game.load.image('5','assets/inventory/images.jpg');
-		game.load.image('6','assets/inventory/meat.jpg');
+		game.load.image('6','assets/inventory/meat.png');
 		game.load.image('7','assets/inventory/sil2.jpg');
 		game.load.image('8','assets/inventory/Tomato.png');
 		game.load.image('9','assets/inventory/torch.png');

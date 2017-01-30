@@ -19,7 +19,7 @@ class Animals {
 
 		this.animals.inputEnableChildren = true;
 		this.animals.onChildInputOver.add(function() {
-            cursorSprite.frame = 2;
+            cursorSprite.frame = 4;
         }, this);
 
         this.animals.onChildInputOut.add(function(){
@@ -94,6 +94,9 @@ class Animals {
 		
 		this.kittyList[animaldata.id].indicatorval.alpha = 0.5;
 
+		if(animaldata.h <= 0) {
+			playState.inventory.acquireItemFromLocation(animaldata.x, animaldata.y, 6);
+		}
 
 	/*		
 	for(var i = 0; i < animaldata.length; i++) {

@@ -2,8 +2,18 @@ class Inventory {
     constructor(game) {
         this.game = game;
 
+
+		this.inventoryItem = [0,0,0,0,0,0];
+		this.inventoryItem[5] = game.add.sprite(0, 0, '6');
+		this.inventoryItem[5].fixedToCamera = true;
+		this.inventoryItem[5].visible = false;
+
+
         let x = (game.width / 2) - 860/2;
         let y = game.height - 128;
+
+		this.ax = x;
+		this.ay = y;
 
         this.bg = game.add.sprite(x, y, 'bg');
         this.bg.fixedToCamera = true;
@@ -39,6 +49,15 @@ class Inventory {
 		//window.graphics = graphics;
     }
 
+	acquireItemFromLocation(x, y, item) {
+
+        this.inventoryItem[item - 1].x = x - this.game.camera.x;
+		this.inventoryItem[item - 1].y = y - this.game.camera.y;
+		this.inventoryItem[item - 1].visible = true;
+		this.inventoryItem[item - 1].fixedToCamera = false;
+
+		this.game.add.tween(this.inventoryItem[item - 1]).to({x: 2, y: 2 }, 5000);
+    }
     
 
 }

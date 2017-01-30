@@ -94,6 +94,12 @@ setInterval(function() {
 		for(var i = 0; i < animals.length; i++) {
 			animals[i].d = rand(0, 3);
 			io.sockets.emit("animal_update", animals[i]);
+
+      if(animals[i].h <= 0) {
+          animals[i].h = 100;
+          animals[i].x = 0;
+          animals[i].y = 0;
+      }
 		}	
 
 
