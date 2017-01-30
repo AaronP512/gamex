@@ -62,10 +62,10 @@ setInterval(function() {
 
 setInterval(function() {
     io.sockets.emit('time', ++minute);
-    minute += 1 ;
+    minute += 10 ;
     if(minute > 24*60) minute = 0;
 
-}, 500);
+}, 50); //500
 
 
 setInterval(function() {

@@ -210,7 +210,8 @@ let playState = {
         game.camera.follow(mia);
 
 
-
+        
+        players = new Players(game, mia);
 
 
         /*
@@ -218,7 +219,7 @@ let playState = {
         *
         *
         */
-
+        
 
         this.shadowTexture = this.game.add.bitmapData(this.game.width, this.game.height);    // Create an object that will use the bitmap as a texture   
         this.lightSprite = this.game.add.image(this.game.camera.x, this.game.camera.y, this.shadowTexture);    // Set the blend mode to MULTIPLY. This will darken the colors of  everything below this sprite.    
@@ -264,7 +265,6 @@ let playState = {
 
 
         
-        players = new Players(game, mia);
 
 
         bloodOverlays[0] = game.add.sprite(0, 0, 'blood-1');
@@ -379,11 +379,15 @@ let playState = {
 
         this.rgb = '10, 10, 10';
         if(time < 4*60) this.rgb = '10, 10, 10';
-        if(time >= 4*60 && time < 6*60) this.rgb = '110, 110, 110';
-        if(time >= 6*60 && time < 9*60) this.rgb = '150, 150, 150'
-        if(time >= 9*60 && time < 16*60) this.rgb = '255, 255, 255'
-        if(time >= 16*60 && time < 18*60) this.rgb = '190, 150, 150'
-        if(time >= 18*60 && time < 20*60) this.rgb = '110, 110, 110'
+        if(time >= 4*60 && time < 5*60) this.rgb = '70, 70, 70';
+        if(time >= 5*60 && time < 6*60) this.rgb = '100, 100, 100';
+        if(time >= 6*60 && time < 7*60) this.rgb = '130, 130, 130';
+        if(time >= 7*60 && time < 9*60) this.rgb = '150, 150, 150';
+        if(time >= 9*60 && time < 12*60) this.rgb = '200, 200, 200';
+        if(time >= 12*60 && time < 16*60) this.rgb = '255, 255, 255';
+        if(time >= 16*60 && time < 18*60) this.rgb = '190, 150, 150';
+        if(time >= 18*60 && time < 19*60) this.rgb = '140, 140, 160';
+        if(time >= 19*60 && time < 20*60) this.rgb = '110, 110, 110';
         if(time >= 20*60) this.rgb = '10, 10, 10';
 
     }
