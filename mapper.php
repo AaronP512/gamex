@@ -32,13 +32,38 @@ if(isset($_GET['a']) && $_GET['a'] == '3') {
             ?> 
 
             
+               
+
+
+            <?php if($i == 'pond-a') { ?>
+
+                var element = ponds.create(<?php echo $x; ?>, <?php echo $y; ?>, "<?php echo $i; ?>");
+                element.body.immovable = true;
+                console.log("creating " + element.z + ", "+ element.key);
+
+                element.animations.add('default',[0,1,2],3,true);
+                element.animations.play('default');
+                element .animations.currentAnim.speed = 10;
+            <?php } 
+            else if($i == 'fire-a') { ?>
+
+
+                var element = fires.create(<?php echo $x; ?>, <?php echo $y; ?>, "<?php echo $i; ?>");
+                element.body.immovable = true;
+                console.log("creating " + element.z + ", "+ element.key);
+
+                element.animations.add('default',[0,1,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17],18,true);
+                element.animations.play('default');
+                element .animations.currentAnim.speed = 10;
+                playState.objectsThatRequireLight.push(element);
+            <?php } else { ?>
+
                 var element = feet.create(<?php echo $x; ?>, <?php echo $y; ?>, "<?php echo $i; ?>");
                 element.body.immovable = true;
                 console.log("creating " + element.z + ", "+ element.key);
 
-               // game.physics.arcade.enable(element);
-                //element.enableBody = true;
-            
+            <?php } ?>
+
             <?php if($i == 'tree_foot') { ?>
 
                 element.body.setSize(30, 2, 21, 0); //check
@@ -50,20 +75,7 @@ if(isset($_GET['a']) && $_GET['a'] == '3') {
         
             <?php } ?>
 
-            <?php if($i == 'pond-a') { ?>
-
-                element.animations.add('default',[0,1,2],3,true);
-                element.animations.play('default');
-                element .animations.currentAnim.speed = 10;
-            <?php } ?>
-           
-           <?php if($i == 'fire-a') { ?>
-
-                element.animations.add('default',[0,1,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17],18,true);
-                element.animations.play('default');
-                element .animations.currentAnim.speed = 10;
-                playState.objectsThatRequireLight.push(element);
-            <?php } ?>
+            
 
             
             <?php

@@ -8,8 +8,11 @@ var cursors, movementKeys;
 var sam;
 var mia;
 var cursors;
+
 var belly;
 var feet;
+var ponds;
+var fires;
 
 
 
@@ -88,6 +91,12 @@ let playState = {
         tomatoes = game.add.group();
         tomatoes.enableBody = true;
 
+        ponds = game.add.group();
+        ponds.enableBody = true;
+
+        fires = game.add.group();
+        fires.enableBody = true;
+
         otherplayer = game.add.sprite(800, 400, 'gary');
         otherplayer.visible = false;
         otherplayer.enableBody = true;
@@ -134,7 +143,7 @@ let playState = {
 
 
 
-
+        
 
         
         belly.onChildInputDown.add(function (sprite) {
