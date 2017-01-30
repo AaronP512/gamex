@@ -124,7 +124,17 @@ let playState = {
         game.physics.arcade.enable(mia);
         mia.body.setSize(50, 42, 7, 15); //check
 
-        
+         ponds.inputEnableChildren = true;
+        ponds.onChildInputOver.add(function() {
+            cursorSprite.frame = 2;
+            console.log("ldmcvdsnm");
+        }, this);
+
+        ponds.onChildInputOut.add(function(){
+            this.game.canvas.style.cursor = "none";
+            cursorSprite.frame = 0;
+           // cursorSprite.body.setSize(45,0,45,0);
+            }, this);
 
 
         belly = game.add.group();
