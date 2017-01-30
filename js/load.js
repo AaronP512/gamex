@@ -75,7 +75,7 @@ let loadState = {
 
         /* Pointers */
         game.load.image('pointer_axe', 'assets/pointers/axe.png');
-        game.load.spritesheet('pointers', 'assets/pointers/pointersprite.png', 64, 64, 4);
+        game.load.spritesheet('pointers', 'assets/pointers/pointersprite.png', 64, 64, 5);
         //flowers
         game.load.image('flower1', 'assets/flower1.png');
         game.load.image('flower2', 'assets/flower2.png');
