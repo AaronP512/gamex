@@ -20,6 +20,7 @@ var fires;
 var otherplayer;
 
 let treeClickCounter = 1;
+let pondClickCounter = 1;
 
 var cursorSprite;
 
@@ -140,6 +141,15 @@ let playState = {
             sprite.animations.play("rip");
             sprite.animations.currentAnim.speed = 10;
             setTimeout(function(){
+
+                if(pondClickCounter++ % (game.rnd.integerInRange(1, 9)) == 0) {
+   
+                    console.log("go fish");                    
+
+                    //socket.emit('cut_tree', { treeid: sprite.z });
+
+                }
+
                sprite.animations.play("default");
             },1000);
             console.log("ponf");
