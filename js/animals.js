@@ -1,10 +1,13 @@
 class Animals {
 	
 	constructor(game) {
+		this.game = game;
 		this.animals = game.add.group();
 		this.kittyList = []
 		this.kittyCount = 0;
 		this.followenabled = false;
+		let thiscontext = this;
+        this.swordSFX = game.add.audio('sword-a');
         //.enableBody = true;
 
 		this.animalsRequestedFromServer = false;
@@ -13,6 +16,21 @@ class Animals {
 			console.log("Requesting animals...");
 			socket.emit("request_animals", { data: 0 });
 		}, 2000);
+
+		this.animals.inputEnableChildren = true;
+		this.animals.onChildInputOver.add(function() {
+            cursorSprite.frame = 2;
+        }, this);
+
+        this.animals.onChildInputOut.add(function(){
+            this.game.canvas.style.cursor = "none";
+            cursorSprite.frame = 0;
+    	}, this);
+
+		this.animals.onChildInputDown.add(function (sprite) {
+			thiscontext.swordSFX.play();
+			socket.emit("attack_animal", { animalid: sprite.z });
+		});
 
 	}
 
@@ -39,6 +57,12 @@ class Animals {
 			}
 			item.animations.play(anim);
 			
+			animalthis.kittyList[item.z].indicator.x = item.position.x;
+			animalthis.kittyList[item.z].indicator.y = item.position.y;
+
+			animalthis.kittyList[item.z].indicatorval.x = item.position.x;
+			animalthis.kittyList[item.z].indicatorval.y = item.position.y;
+
 			/*
 			let now = new Date();
 
@@ -58,6 +82,17 @@ class Animals {
 		this.kittyList[animaldata.id].obj.position.x = animaldata.x;
 		this.kittyList[animaldata.id].obj.position.y = animaldata.y;
 		this.kittyList[animaldata.id].direction = animaldata.d;
+		this.kittyList[animaldata.id].health = animaldata.h;
+
+		
+		this.kittyList[animaldata.id].indicatorval.clear();
+		this.kittyList[animaldata.id].indicatorval.lineStyle(2, 0xFFFF00, 0);
+        this.kittyList[animaldata.id].indicatorval.beginFill(0xFF0000, 1);
+        this.kittyList[animaldata.id].indicatorval.drawRect(0, 0, animaldata.h/2, 8);
+        this.kittyList[animaldata.id].indicatorval.endFill();
+
+		
+		this.kittyList[animaldata.id].indicatorval.alpha = 0.5;
 
 
 	/*		
@@ -110,7 +145,7 @@ class Animals {
     	});
 	}
 
-	create(animal, id) {
+	create(animal, id, hp) {
 
 		this.animalsRequestedFromServer = true;
 		console.log("Creating new animal " + id + " as " + animal);
@@ -152,8 +187,24 @@ class Animals {
 		this.kittyList.push({id: rap.z, direction: dir, changedDirections: (new Date().getTime()) + Math.random() * 10000});
 		*/
 
+	
+
+		let graphicsHealth = game.add.graphics(100, 15);
+        graphicsHealth.lineStyle(1, 0xFFFF00, 1);
+        graphicsHealth.drawRect(0, 0, 50, 8);
+        graphicsHealth.endFill();
+
+       	let graphicsHealthValue = game.add.graphics(100, 15);
+        graphicsHealthValue.lineStyle(2, 0xFFFF00, 0);
+        graphicsHealthValue.beginFill(0xFF0000, 1);
+        graphicsHealthValue.drawRect(0, 0, hp/2, 8);
+        graphicsHealthValue.endFill();
+
+
 		kitty.z = id;
-		this.kittyList.push({obj: kitty, id: kitty.z, direction: 0});
+		
+
+		this.kittyList.push({obj: kitty, id: kitty.z, direction: 0, health: hp, indicator: graphicsHealth, indicatorval: graphicsHealthValue});
 
 
 

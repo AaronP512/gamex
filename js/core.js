@@ -22,7 +22,6 @@ var otherplayer;
 let treeClickCounter = 1;
 
 var cursorSprite;
-var cursorSprite;
 
 var animals;
 
@@ -299,6 +298,7 @@ let playState = {
           
 
         game.physics.arcade.collide(mia, feet);
+        game.physics.arcade.collide(mia, ponds);
       //  game.physics.arcade.overlap(sam, feet, function() { alert("boom"); }, null, this);
 
         game.physics.arcade.collide(mia, tomatoes);
@@ -514,7 +514,7 @@ socket.on('attack_ack',function(data) {
 
 socket.on('animal_create', function(data) {
     if(!playState.preloadDone) return;
-    animals.create(data.type, data.id);
+    animals.create(data.type, data.id, data.h);
 });
 socket.on('animal_update', function(data) {
     if(!playState.preloadDone) return;

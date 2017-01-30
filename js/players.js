@@ -3,6 +3,7 @@ class Players {
     constructor(game, mia) {
         this.players = [];
         this.playersLastXY = [];
+        this.playerGraphics = [];
         this.game = game;
         this.mia = mia;
         this.playerGroup = game.add.group();
@@ -66,7 +67,19 @@ class Players {
         this.players[uid] = newPlayer;
         this.playersLastXY[uid] = {x: 0, y: 0};
 
-        
+        let graphicsHealth = game.add.graphics(100, 15);
+        graphicsHealth.lineStyle(1, 0xFFFF00, 1);
+        graphicsHealth.drawRect(0, 0, 50, 8);
+        graphicsHealth.endFill();
+
+       	let graphicsHealthValue = game.add.graphics(100, 15);
+        graphicsHealthValue.lineStyle(2, 0xFFFF00, 0);
+        graphicsHealthValue.beginFill(0x00FF00, 1);
+        graphicsHealthValue.drawRect(0, 0, 100, 8);
+        graphicsHealthValue.endFill();
+
+        this.playerGraphics[uid] = {indicator: graphicsHealth, indicatorval: graphicsHealthValue};
+
         
 
     }
@@ -106,6 +119,19 @@ class Players {
         }
             
         this.playersLastXY[uid] = {x: this.players[uid].x, y: this.players[uid].y };   
+        
+        this.playerGraphics[uid].indicator.x = this.players[uid].x;
+        this.playerGraphics[uid].indicator.y = this.players[uid].y;
+
+        this.playerGraphics[uid].indicatorval.clear();
+        this.playerGraphics[uid].indicatorval.x = this.players[uid].x;
+        this.playerGraphics[uid].indicatorval.y = this.players[uid].y;
+		this.playerGraphics[uid].indicatorval.lineStyle(2, 0xFFFF00, 0);
+        this.playerGraphics[uid].indicatorval.beginFill(0x00FF00, 1);
+        this.playerGraphics[uid].indicatorval.drawRect(0, 0, parseInt(data[7])/2, 8);
+        this.playerGraphics[uid].indicatorval.endFill();
+
+        
     }
 
     processAttackOnMe(sprite) {
@@ -125,6 +151,9 @@ class Players {
         console.log("FOE: " + hd + "," + vd + "," + anim);
         
         mia.body.velocity.x = -300;
+
+
+         
 
     }
 

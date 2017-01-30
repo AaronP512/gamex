@@ -33,7 +33,7 @@ var animals = [];
 
 	var animallist = ['kitty', 'godzilla'];
 	for(var i = 0; i < 20; i++) {
-		animals.push({ id: i, type: animallist[rand(0,1)], x: 0, y: 0, d: 0});		
+		animals.push({ id: i, type: animallist[rand(0,1)], x: 0, y: 0, d: 0, h: 100});		
 		console.log("Creating animal " + i + " as " + animals[i].type);
 	}
 
@@ -53,7 +53,7 @@ setInterval(function() {
             for(xplayer in clients) {
             if(!xplayer || !clients[xplayer] || !clients[player]) continue; //Null Check, Again (If disconnected in between, thanks node)
             if(clients[player].obj.id != clients[xplayer].obj.id) {
-                clients[player].obj.send("PPOS " + clients[xplayer].obj.id + " " + clients[xplayer].x + " " + clients[xplayer].y  + " " + clients[xplayer].vx + " " + clients[xplayer].vy + " " + clients[xplayer].anim);
+                clients[player].obj.send("PPOS " + clients[xplayer].obj.id + " " + clients[xplayer].x + " " + clients[xplayer].y  + " " + clients[xplayer].vx + " " + clients[xplayer].vy + " " + clients[xplayer].anim + " " + clients[xplayer].health);
             }
         }
     }
@@ -89,7 +89,7 @@ setInterval(function() {
 
 
 
-	if(new Date() - lastanimalupdate > 2000) {
+	if(new Date() - lastanimalupdate > 1000) {
 
 		for(var i = 0; i < animals.length; i++) {
 			animals[i].d = rand(0, 3);
@@ -156,6 +156,12 @@ io.on('connection', function(socket){
            //clients[playerid.obj.send("ATT " + socket.id + " " + clients[cmd[1]].health);
 		   clients[playerid].obj.emit("attack_ack", {by: socket.id, hp: clients[playerid].health });
         }
+  });
+
+  socket.on('attack_animal', function(animal){
+      /*** Do a Distance Check here ***/
+      animals[animal.animalid].h -= 10;
+	
   });
 
   //unused.
