@@ -275,6 +275,15 @@ let playState = {
         bloodOverlays[1] = game.add.sprite(0, 0, 'blood-2');
         bloodOverlays[2] = game.add.sprite(0, 0, 'blood-3');
 
+        bloodOverlays[0].width = game.width;
+        bloodOverlays[0].height = game.height;
+
+        bloodOverlays[1].width = game.width;
+        bloodOverlays[1].height = game.height;
+
+        bloodOverlays[2].width = game.width;
+        bloodOverlays[2].height = game.height;
+
         bloodOverlays[0].fixedToCamera = true;
         bloodOverlays[1].fixedToCamera = true;
         bloodOverlays[2].fixedToCamera = true;
