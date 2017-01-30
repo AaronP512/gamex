@@ -124,9 +124,9 @@ let playState = {
         mia.body.setSize(50, 42, 7, 15); //check
 
          ponds.inputEnableChildren = true;
-        ponds.onChildInputOver.add(function() {
+        ponds.onChildInputOver.add(function(sprite) {
             cursorSprite.frame = 2;
-            console.log("ldmcvdsnm");
+            if(!isPlayerInRangeOfSprite(mia, sprite, 100)) cursorSprite.frame = 3;
         }, this);
 
         ponds.onChildInputOut.add(function(){
@@ -136,6 +136,7 @@ let playState = {
             }, this);
 
          ponds.onChildInputDown.add(function(sprite){
+            if(!isPlayerInRangeOfSprite(mia, sprite, 100)) return playStateContext.accessDeniedSFX.play();
             sprite.animations.play("rip");
             sprite.animations.currentAnim.speed = 10;
             setTimeout(function(){
@@ -147,10 +148,14 @@ let playState = {
 
         belly = game.add.group();
         belly.inputEnableChildren = true;
-        belly.onChildInputOver.add(function() {
+        belly.onChildInputOver.add(function(sprite) {
             //this.game.canvas.style.cursor = "move";
           //  cursorSprite.body.setSize(64,0,55,66);
             cursorSprite.frame = 1;
+
+            if(!isPlayerInRangeOfSprite(mia, sprite, 20)) cursorSprite.frame = 3;
+
+
         }, this);
 
         belly.onChildInputOut.add(function(){
