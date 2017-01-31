@@ -497,7 +497,7 @@ socket.on('time',function(time) {
 socket.on('trees_cut_down', function(trees) {
 
     if(!playState.preloadDone) return;
-    console.log(trees);
+    //console.log(trees);
    
     belly.forEach(function(item) {
         //console.log("Comparing " + item.z);
@@ -534,6 +534,11 @@ socket.on('attack_ack',function(data) {
 });
 
 
+
+
+socket.on('player_quit', function(player) {
+    players.destroyPlayer(player.id);
+});
 
 
 /* animals */

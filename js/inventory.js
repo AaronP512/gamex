@@ -51,6 +51,7 @@ class Inventory {
 
 	acquireItemFromLocation(x, y, item) {
 
+		console.log("Acquire Item " + item);
         this.inventoryItem[item - 1].x = x;// - this.game.camera.x;
 		this.inventoryItem[item - 1].y = y;// - this.game.camera.y;
 		this.inventoryItem[item - 1].visible = true;

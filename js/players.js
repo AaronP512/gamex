@@ -157,6 +157,10 @@ class Players {
 
     }
 
+    destroyPlayer(uid) {
+        this.players[uid].visible = false;
+        this.players[uid].playerGraphics = false;
+    }
 
     
 
