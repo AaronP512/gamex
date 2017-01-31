@@ -110,19 +110,15 @@ let playState = {
 
 
 
-
-
-
-
-
-
-
-
         mia = game.add.sprite(0, 0, 'mia');
         mia.enableBody = true;
         mia.scale.setTo(1.5,1.5);
         game.physics.arcade.enable(mia);
         mia.body.setSize(50, 42, 7, 15); //check
+
+        this.lakeoverlaygroup = game.add.group();
+        this.lakeoverlaygroup.enableBody = true;
+        
 
          ponds.inputEnableChildren = true;
         ponds.onChildInputOver.add(function(sprite) {
@@ -138,7 +134,10 @@ let playState = {
 
          ponds.onChildInputDown.add(function(sprite){
             if(!isPlayerInRangeOfSprite(mia, sprite, 100)) return playStateContext.accessDeniedSFX.play();
-            sprite.animations.play("rip");
+            
+            if (!this.fishing || !this.fishing.isPlaying){
+
+            this.fishing = sprite.animations.play("rip");
             sprite.animations.currentAnim.speed = 10;
             setTimeout(function(){
 
@@ -146,13 +145,13 @@ let playState = {
    
                     console.log("go fish");                    
 
-                    //socket.emit('cut_tree', { treeid: sprite.z });
-
                 }
 
                sprite.animations.play("default");
             },1000);
-            console.log("ponf");
+            }
+
+            //console.log("ponf");
             }, this);
 
 
@@ -245,7 +244,10 @@ let playState = {
 
 
 
-
+        ponds.forEach(function(sprite){
+            var element_overlay = playStateContext.lakeoverlaygroup.create(sprite.x,sprite.y,sprite.key);
+            element_overlay.frame = 6;
+        });
 
 
 
@@ -486,7 +488,7 @@ socket.on('disconnect',function() {
 
 
 socket.on('time',function(time) {
-    console.log("TIME: " + time);
+    //console.log("TIME: " + time);
     playState.updateGameClock(time);
         
 });

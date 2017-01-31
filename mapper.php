@@ -38,6 +38,8 @@ if(isset($_GET['a']) && $_GET['a'] == '3') {
             <?php if($i == 'pond-a') { ?>
 
                 var element = ponds.create(<?php echo $x; ?>, <?php echo $y; ?>, "<?php echo $i; ?>");
+               
+                element.body.setSize(205,40,35,30);
                 element.body.immovable = true;
                 console.log("creating " + element.z + ", "+ element.key);
 
