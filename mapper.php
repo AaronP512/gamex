@@ -33,9 +33,15 @@ if(isset($_GET['a']) && $_GET['a'] == '3') {
 
             
                
+            <?php if($i == 'tomato') { ?>
+
+                var element = pickups.create(<?php echo $x; ?>, <?php echo $y; ?>, "<?php echo $i; ?>");
+                element.body.immovable = true;
+                console.log("creating pickup " + element.z + ", "+ element.key);
 
 
-            <?php if($i == 'pond-a') { ?>
+            <?php } 
+             else if($i == 'pond-a') { ?>
 
                 var element = ponds.create(<?php echo $x; ?>, <?php echo $y; ?>, "<?php echo $i; ?>");
                 element.body.immovable = true;
@@ -47,7 +53,7 @@ if(isset($_GET['a']) && $_GET['a'] == '3') {
                 element.animations.play('default');
                 element.animations.currentAnim.speed = 10;
 
-
+                
             <?php } 
             else if($i == 'fire-a') { ?>
 

@@ -13,7 +13,7 @@ var belly;
 var feet;
 var ponds;
 var fires;
-
+var pickups;
 
 
 
@@ -88,8 +88,8 @@ let playState = {
         feet = game.add.group();
         feet.enableBody = true;
 
-        tomatoes = game.add.group();
-        tomatoes.enableBody = true;
+        pickups = game.add.group();
+        pickups.enableBody = true;
 
         ponds = game.add.group();
         ponds.enableBody = true;
@@ -325,8 +325,12 @@ let playState = {
         game.physics.arcade.collide(mia, ponds);
       //  game.physics.arcade.overlap(sam, feet, function() { alert("boom"); }, null, this);
 
-        game.physics.arcade.collide(mia, tomatoes);
-        game.physics.arcade.overlap(mia, tomatoes, function() { alert("spooch"); }, null, this);
+        //game.physics.arcade.collide(mia, tomatoes);
+        game.physics.arcade.overlap(pickups, mia, function(sprite, groupitem) {
+            
+            groupitem.visible = false;
+            this.inventory.acquireItemFromLocation(groupitem.x, groupitem.y, 8);
+          }, null, this);
         //game.debug.cameraInfo(game.camera, 32, 32);
 
         
@@ -535,6 +539,7 @@ socket.on('attack_ack',function(data) {
 
 
 socket.on('player_quit', function(player) {
+    console.log("Bye " + player.id);
     players.destroyPlayer(player.id);
 });
 

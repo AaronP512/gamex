@@ -108,7 +108,7 @@ let loadState = {
 }
 
 
-    function isPlayerInRangeOfSprite(mia, sprite) {
+function isPlayerInRangeOfSprite(mia, sprite) {
         let vd = Math.abs(mia.x - sprite.x);
         let hd = Math.abs(mia.y - sprite.y);
         if(vd < 100 && hd < 100) return true;

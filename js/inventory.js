@@ -8,6 +8,10 @@ class Inventory {
 		this.inventoryItem[5].fixedToCamera = true;
 		this.inventoryItem[5].visible = false;
 
+		this.inventoryItem[7] = game.add.sprite(0, 0, '8');
+		this.inventoryItem[7].fixedToCamera = true;
+		this.inventoryItem[7].visible = false;
+
 
         let x = (game.width / 2) - 860/2;
         let y = game.height - 128;
@@ -51,6 +55,7 @@ class Inventory {
 
 	acquireItemFromLocation(x, y, item) {
 
+		
 		console.log("Acquire Item " + item);
         this.inventoryItem[item - 1].x = x;// - this.game.camera.x;
 		this.inventoryItem[item - 1].y = y;// - this.game.camera.y;

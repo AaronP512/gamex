@@ -129,8 +129,8 @@ io.on('connection', function(socket){
   clients[socket.id] = { obj: socket, x: 0, y: 0, vx:0, vy:0, anim: "", health: 100 };
   socket.send("Welcome " + socket.id);
 
-  	socket.emit("animal_create", animals[0]);
-  	socket.emit("animal_create", animals[1]);
+  	//socket.emit("animal_create", animals[0]);
+  	//socket.emit("animal_create", animals[1]);
 
   socket.on('disconnect', function () {
     console.log('A user disconnected');
@@ -140,7 +140,7 @@ io.on('connection', function(socket){
     console.log("removing " + socket.id);
 
 
-    socket.emit("player_quit", {id: socket.id});
+    io.sockets.emit("player_quit", {id: socket.id})
 
   });
 

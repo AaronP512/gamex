@@ -159,7 +159,8 @@ class Players {
 
     destroyPlayer(uid) {
         this.players[uid].visible = false;
-        this.players[uid].playerGraphics = false;
+        if(this.players[uid].playerGraphics.indicator) this.players[uid].playerGraphics.indicator = false;
+        if(this.players[uid].playerGraphics.indicatorval) this.players[uid].playerGraphics.indicatorval = false;
     }
 
     
