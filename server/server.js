@@ -139,6 +139,9 @@ io.on('connection', function(socket){
     clients[socket.id] = null;
     console.log("removing " + socket.id);
 
+
+    socket.emit("player_quit", {id: socket.id});
+
   });
 
   socket.on('cut_tree', function(data) { 
